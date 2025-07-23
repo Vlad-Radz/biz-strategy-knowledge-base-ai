@@ -1,0 +1,37 @@
+PREFIX bizrisk: <http://example.com/bizrisk#>
+PREFIX dpv-owl: <https://w3id.org/dpv/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?riskEvent ?riskEventLabel ?riskEventDescription ?impactDescription ?severity ?temporality
+WHERE {
+    # Find RiskEvents that are materializations of Cyber risk
+    ?riskEvent a bizrisk:RiskEvent ;
+               bizrisk:isMaterializationOf bizrisk:Cyber .
+    
+    # Get event label/name
+    OPTIONAL { ?riskEvent rdfs:label ?riskEventLabel }
+    
+    # Get event descriptions
+    OPTIONAL { ?riskEvent bizrisk:hasRiskEventDescription ?riskEventDescription }
+    OPTIONAL { ?riskEvent bizrisk:hasImpactDescription ?impactDescription }
+    
+    # Get severity information
+    OPTIONAL { 
+        ?riskEvent dpv-owl:hasSeverity ?severityLevel .
+        ?severityLevel skos:prefLabel ?severity 
+    }
+    
+    # Get temporality information
+    OPTIONAL { 
+        ?riskEvent bizrisk:Historical ?historical .
+        BIND(IF(?historical = true, "Historical", "") AS ?temp1)
+    }
+    OPTIONAL { 
+        ?riskEvent bizrisk:Future ?future .
+        BIND(IF(?future = true, "Future", "") AS ?temp2)
+    }
+    BIND(CONCAT(?temp1, ?temp2) AS ?temporality)
+    BIND(IF(?temporality = "", "Unspecified", ?temporality) AS ?temporality)
+}
+ORDER BY ?riskEventLabel
