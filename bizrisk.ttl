@@ -75,13 +75,6 @@
 
 
 # For the sake of semantics accuracy and namespace separation, I leave the original prefixes
-dpv-owl:RiskConcept a rdfs:Class,
-        owl:Class ;
-    rdfs:isDefinedBy dpv-owl: ;
-    skos:definition "Parent concept for combining concepts associated with risk assessment such as actual and potential Risk, Risk Source, Consequences, and Impacts"@en ;
-    skos:prefLabel "Risk Concept"@en ;
-    skos:scopeNote "RiskConcept is a generic concept used for creation of specific taxonomies in the RISK extension to provide guidance on how a concept can potentially be a risk, risk source, consequence, and impact. It is not intended to be used directly and is only created for organisation of concepts in DPV vocabularies"@en .
-
 dpv-owl:RiskLevel a rdfs:Class,
         owl:Class ;
     rdfs:isDefinedBy dpv-owl: ;
@@ -92,7 +85,7 @@ dpv-owl:RiskLevel a rdfs:Class,
 dpv-owl:Risk a rdfs:Class,
         owl:Class ;
     rdfs:isDefinedBy dpv-owl: ;
-    rdfs:subClassOf dpv-owl:RiskConcept, dolce:MentalObject ;
+    rdfs:subClassOf dolce:MentalObject ;
     skos:definition "A risk or possibility or uncertainty of negative effects, impacts, or consequences"@en ;
     skos:prefLabel "Risk"@en ;
     skos:scopeNote "Risks can be associated with one or more different concepts such as purpose, processing, personal data, technical or organisational measure"@en .
@@ -100,7 +93,6 @@ dpv-owl:Risk a rdfs:Class,
 bizrisk:RiskEvent a rdfs:Class,
         owl:Class ;
     rdfs:isDefinedBy bizrisk: ;
-    rdfs:subClassOf dpv-owl:RiskConcept ;
     # Require that every RiskEvent has a Temporality property (e.g. Future or Historical)
     rdfs:subClassOf [
         a owl:Restriction ;
@@ -124,7 +116,6 @@ dpv-owl:Severity a rdfs:Class,
 dpv-owl:Consequence a rdfs:Class,
         owl:Class ;
     rdfs:isDefinedBy dpv-owl: ;
-    rdfs:subClassOf dpv-owl:RiskConcept ;
     skos:definition "The consequence(s) possible or arising from specified context"@en ;
     skos:prefLabel "Consequence"@en .
 
@@ -155,20 +146,16 @@ dpv-owl:RiskMitigationMeasure a rdfs:Class,
 
 bizrisk:materializedIn a rdf:Property,
         owl:ObjectProperty ;
-    dcam:domainIncludes dpv-owl:Risk ;
-    schema:domainIncludes dpv-owl:Risk ;
-    dcam:rangeIncludes bizrisk:RiskEvent ;
-    schema:rangeIncludes bizrisk:RiskEvent ;
+    rdfs:domain dpv-owl:Risk ;
+    rdfs:range bizrisk:RiskEvent ;
     rdfs:isDefinedBy bizrisk: ;
     skos:definition "Indicates that a risk has materialized into a specific risk event"@en ;
     skos:prefLabel "materialized in"@en .
 
 bizrisk:isMaterializationOf a rdf:Property,
         owl:ObjectProperty ;
-    dcam:domainIncludes bizrisk:RiskEvent ;
-    schema:domainIncludes bizrisk:RiskEvent ;
-    dcam:rangeIncludes dpv-owl:Risk ;
-    schema:rangeIncludes dpv-owl:Risk ;
+    rdfs:domain bizrisk:RiskEvent ;
+    rdfs:range dpv-owl:Risk ;
     rdfs:isDefinedBy bizrisk: ;
     owl:inverseOf bizrisk:materializedIn ;
     skos:definition "Indicates that a risk event is the materialization of a specific risk"@en ;
@@ -176,10 +163,8 @@ bizrisk:isMaterializationOf a rdf:Property,
 
 dpv-owl:hasRiskLevel a rdf:Property,
         owl:ObjectProperty ;
-    dcam:domainIncludes dpv-owl:Risk ;
-    dcam:rangeIncludes dpv-owl:RiskLevel ;
-    schema:domainIncludes dpv-owl:Risk ;
-    schema:rangeIncludes dpv-owl:RiskLevel ;
+    rdfs:domain dpv-owl:Risk ;
+    rdfs:range dpv-owl:RiskLevel ;
     rdfs:isDefinedBy dpv-owl: ;
     skos:definition "Indicates the associated risk level associated with a risk"@en ;
     skos:prefLabel "has risk level"@en ;
@@ -187,10 +172,8 @@ dpv-owl:hasRiskLevel a rdf:Property,
 
 dpv-owl:hasSeverity a rdf:Property,
         owl:ObjectProperty ;
-    dcam:domainIncludes bizrisk:RiskEvent ;
-    schema:domainIncludes bizrisk:RiskEvent ;
-    dcam:rangeIncludes dpv-owl:Severity ;
-    schema:rangeIncludes dpv-owl:Severity ;
+    rdfs:domain bizrisk:RiskEvent ;
+    rdfs:range dpv-owl:Severity ;
     rdfs:isDefinedBy dpv-owl: ;
     sw:term_status "accepted"@en ;
     skos:definition "Indicates the severity associated with a concept"@en ;
@@ -201,20 +184,16 @@ dpv-owl:hasSeverity a rdf:Property,
 
 bizrisk:mitigatesMaterializedRisk a rdf:Property,
         owl:ObjectProperty ;
-    dcam:domainIncludes dpv-owl:RiskMitigationMeasure ;
-    dcam:rangeIncludes bizrisk:RiskEvent ;
-    schema:domainIncludes dpv-owl:RiskMitigationMeasure ;
-    schema:rangeIncludes bizrisk:RiskEvent ;
+    rdfs:domain dpv-owl:RiskMitigationMeasure ;
+    rdfs:range bizrisk:RiskEvent ;
     rdfs:isDefinedBy bizrisk: ;
     skos:definition "Indicates that a mitigation measure addresses or mitigates a materialized risk event"@en ;
     skos:prefLabel "mitigates materialized risk"@en .
 
 bizrisk:isMitigatedByMeasure a rdf:Property,
         owl:ObjectProperty ;
-    dcam:domainIncludes bizrisk:RiskEvent ;
-    dcam:rangeIncludes dpv-owl:RiskMitigationMeasure ;
-    schema:domainIncludes bizrisk:RiskEvent ;
-    schema:rangeIncludes dpv-owl:RiskMitigationMeasure ;
+    rdfs:domain bizrisk:RiskEvent ;
+    rdfs:range dpv-owl:RiskMitigationMeasure ;
     rdfs:isDefinedBy bizrisk: ;
     rdfs:subPropertyOf dpv-owl:hasTechnicalOrganisationalMeasure ;
     owl:inverseOf bizrisk:mitigatesMaterializedRisk ;
@@ -223,10 +202,8 @@ bizrisk:isMitigatedByMeasure a rdf:Property,
 
 bizrisk:hasImpactOnOperations a rdf:Property,
         owl:ObjectProperty ;
-    dcam:domainIncludes bizrisk:RiskEvent ;
-    schema:domainIncludes bizrisk:RiskEvent ;
-    dcam:rangeIncludes dpv-owl:Impact ;
-    schema:rangeIncludes dpv-owl:Impact ;
+    rdfs:domain bizrisk:RiskEvent ;
+    rdfs:range dpv-owl:Impact ;
     rdfs:isDefinedBy bizrisk: ;
     skos:definition "Indicates the thing (e.g. plan, process, or entity) affected by an impact"@en ;
     skos:prefLabel "has following impact on operations"@en .

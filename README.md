@@ -32,6 +32,13 @@ I aggregated risks on the family level, as I wanted to keep the knowledge base c
 
 ## Other ontologies and taxonomies
 
+dpv:
+- https://w3c.github.io/dpv/2.1/dpv/
+- https://w3c.github.io/dpv/2.0/dpv/modules/risk.html
+- https://github.com/w3c/dpv/blob/master/2.1/dpv/dpv-owl.ttl
+- https://github.com/w3c/dpv/blob/master/2.1/risk/risk.ttl (SKOS)
+- https://github.com/w3c/dpv/blob/master/2.1/risk/risk-owl.ttl (OWL)
+
 for Consequences: look for risk-owl:PotentialConsequence in https://github.com/w3c/dpv/blob/master/2.1/risk/risk-owl.ttl
 
 AI risk ontology: https://delaramglp.github.io/airo/
@@ -76,13 +83,15 @@ constraint, strategic investment
 
 Future development:
 - Wardley
-- reasoners
+- reasoners: subclass relationships, domain/range constraints, owl:sameAs, owl:inverseOf, disjoint classes, transitive properties, SWRL rules. Description logic inference: owl:intersectionOf, owl:unionOf, owl:someValuesFrom ——> use Apache Jena to infer data before loading to Neo4j
 - XBRL + MCP
     - installation: https://sec-edgar-mcp.amorelli.tech/setup/installation
 - expose MCP server like here for strategy planning? https://github.com/stefanoamorelli/sec-edgar-mcp/blob/main/sec_edgar_mcp/server.py
 - process modeling
 - Decompose EU AI Act
 - Use graph data science to show strange processes
+- submit a data model for risk management? https://neo4j.com/developer/industry-use-cases/data-models/transactions/transactions-base-model/
+- RDF preview extension: [link](https://github.com/LucienRbl/rdf-preview). Visualize VS code, structure
 
 
 
