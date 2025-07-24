@@ -1,0 +1,29 @@
+# You can add or remove environment variables, change the port mappings, or add additional model provider integrations, such as Ollama, or Hugging Face Transformers.
+# To start: docker compose up -d
+# Reference: https://weaviate.io/developers/weaviate/installation/docker-compose#starter-docker-compose-file
+
+---
+services:
+  weaviate:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.32.2
+    restart: on-failure:0
+    ports:
+    - 8081:8080  # Map host port 8081 to container port 8080
+    - 50051:50051
+    environment:
+      QUERY_DEFAULTS_LIMIT: 20
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      PERSISTENCE_DATA_PATH: "./data"
+      DEFAULT_VECTORIZER_MODULE: text2vec-transformers
+      ENABLE_MODULES: text2vec-transformers
+      TRANSFORMERS_INFERENCE_API: http://t2v-transformers:8080
+      CLUSTER_HOSTNAME: 'node1'
+  t2v-transformers:
+    image: cr.weaviate.io/semitechnologies/transformers-inference:sentence-transformers-multi-qa-MiniLM-L6-cos-v1
+    environment:
+      ENABLE_CUDA: 0 # set to 1 to enable
+      # NVIDIA_VISIBLE_DEVICES: all # enable if running with CUDA
+
+# Note that transformer models are neural networks built to run on GPUs.
+# Running Weaviate with the text2vec-transformers module and without GPU is possible, but it will be slower.
+# Enable CUDA with ENABLE_CUDA=1 if you have a GPU available.

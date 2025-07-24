@@ -1,0 +1,59 @@
+@startuml
+title Helm chart hierarchy for ArgoCD WebApp deployments
+
+skinparam linetype ortho
+left to right direction
+
+!define SPRITESURL https://raw.githubusercontent.com/plantuml-stdlib/gilbarbara-plantuml-sprites/v1.1/sprites
+!includeurl SPRITESURL/git-icon.puml
+!includeurl SPRITESURL/bitbucket.puml
+!includeurl SPRITESURL/jfrog.puml
+!includeurl SPRITESURL/helm.puml
+
+package "<$jfrog{scale=0.3}> JFrog" as jfrog {
+    component "<$helm{scale=0.3}> webapp-deploy" as helmWebApp {
+    }
+    component "<$helm{scale=0.3}> webapp-eso" as helmEso {
+    }
+    component "<$helm{scale=0.3}> webapp-logstash" as helmLogstash {
+    }
+}
+
+package "<$bitbucket{scale=0.3}> Bitbucket" as bitbucket {
+    component "<$git-icon{scale=0.3}> webapp-eso" as gitEso {
+    }
+    component "<$git-icon{scale=0.3}> webapp-deploy" as gitWebApp {
+    }
+    component "<$git-icon{scale=0.3}> webapp-logstash" as gitLogstash {
+    }
+    component "<$git-icon{scale=0.3}> webapp_application" as gitApplication {
+    }
+}
+
+gitApplication -----> helmWebApp : refers
+gitApplication -----> helmEso : refers
+gitApplication -----> helmLogstash : refers
+
+helmWebApp -> gitWebApp : published from
+helmEso -> gitEso : published from
+helmLogstash -> gitLogstash : published from
+
+note left of "gitEso"
+    Helm Chart of External Secrets Operator (ESO)
+end note
+
+note left of "gitWebApp"
+    Helm Chart of WebApp
+end note
+
+note left of "gitLogstash"
+    Helm Chart of LogStash
+end note
+
+note left of "gitApplication"
+    ArgoCD GitOps repository:
+    * central repository,
+      where ArgoCD applications are defined
+end note
+
+@enduml

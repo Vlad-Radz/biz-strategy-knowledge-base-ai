@@ -1,0 +1,83 @@
+#################################################################
+#    Example instances
+#################################################################
+
+# Simplified example for document extraction - all descriptions on RiskEvent
+bizrisk:ExtractedRiskEvent001 a bizrisk:RiskEvent ;
+    bizrisk:hasRiskEventDescription "supplier bankruptcy led to immediate halt in component deliveries"@en ;
+    bizrisk:hasImpactDescription "disrupted supply chain causing delays in product delivery, increased costs, and customer dissatisfaction"@en ;
+    bizrisk:hasMitigationMeasureDescription "occurred during peak production season when alternative suppliers were already at capacity"@en ;
+    bizrisk:isMaterializationOf bizrisk:Counterparty ;
+    dpv-owl:hasSeverity risk-owl:ModerateSeverity ;
+    rdfs:label "Supplier Bankruptcy Event 2024"@en .
+
+# Another example showing different types of extracted information
+bizrisk:ExtractedRiskEvent002 a bizrisk:RiskEvent ;
+    bizrisk:hasRiskEventDescription "cyberattack targeting customer database systems"@en ;
+    bizrisk:hasImpactDescription "potential data breach affecting 50,000 customer records, regulatory fines estimated at $2M, brand reputation damage"@en ;
+    bizrisk:hasMitigationMeasureDescription "enhanced monitoring and incident response protocols implemented"@en ;
+    bizrisk:isMaterializationOf bizrisk:Cyber ;
+    dpv-owl:hasSeverity risk-owl:HighSeverity ;
+    rdfs:label "Customer Data Breach Incident"@en .
+
+
+# Examples showing binary temporality properties in action
+
+# Historical risk event (already occurred)
+bizrisk:HistoricalRiskExample a bizrisk:RiskEvent ;
+    bizrisk:hasRiskEventDescription "Server outage caused by power failure in 2023"@en ;
+    bizrisk:hasImpactDescription "3-hour downtime affecting customer services"@en ;
+    bizrisk:isMaterializationOf bizrisk:CriticalInfrastructure ;
+    bizrisk:Historical true ;
+    dpv-owl:hasSeverity risk-owl:ModerateSeverity ;
+    rdfs:label "2023 Power Outage Event"@en .
+
+# Future risk scenario (potential/hypothetical)
+bizrisk:FutureRiskExample a bizrisk:RiskEvent ;
+    bizrisk:hasRiskEventDescription "Potential supply chain disruption due to climate change"@en ;
+    bizrisk:hasImpactDescription "Could affect 30% of suppliers by 2030"@en ;
+    bizrisk:isMaterializationOf bizrisk:ClimateChange ;
+    bizrisk:Future true ;
+    dpv-owl:hasSeverity risk-owl:HighSeverity ;
+    rdfs:label "Climate Risk Scenario 2030"@en .
+
+# Risk event without temporal classification (current/ongoing or unspecified)
+bizrisk:UnclassifiedRiskExample a bizrisk:RiskEvent ;
+    bizrisk:hasRiskEventDescription "Ongoing cybersecurity threats"@en ;
+    bizrisk:hasImpactDescription "Continuous monitoring required"@en ;
+    bizrisk:isMaterializationOf bizrisk:Cyber ;
+    dpv-owl:hasSeverity risk-owl:ModerateSeverity ;
+    rdfs:label "Current Cyber Threat Landscape"@en .
+
+
+#################################################################
+#    VALIDATION EXAMPLES: Demonstrating the temporal classification requirement
+#################################################################
+
+# ✅ Valid: Historical risk event
+bizrisk:ValidHistoricalExample a bizrisk:RiskEvent ;
+    bizrisk:hasRiskEventDescription "Data center fire in 2022"@en ;
+    bizrisk:isMaterializationOf bizrisk:IndustrialAccident ;
+    bizrisk:Historical true ;
+    rdfs:label "Valid Historical Risk Event"@en .
+
+# ✅ Valid: Future risk scenario  
+bizrisk:ValidFutureExample a bizrisk:RiskEvent ;
+    bizrisk:hasRiskEventDescription "Potential market crash scenario"@en ;
+    bizrisk:isMaterializationOf bizrisk:MarketCrises ;
+    bizrisk:Future true ;
+    rdfs:label "Valid Future Risk Scenario"@en .
+
+# ❌ Invalid: RiskEvent without temporal classification
+# This will be flagged as incomplete by OWL reasoners:
+# bizrisk:InvalidExample a bizrisk:RiskEvent ;
+#     bizrisk:hasRiskEventDescription "Risk event without temporal classification"@en ;
+#     rdfs:label "Invalid - No Temporal Classification"@en .
+
+# ❌ Invalid: RiskEvent with both Historical and Future (violates disjointness)
+# This will be flagged as inconsistent by OWL reasoners:
+# bizrisk:InconsistentExample a bizrisk:RiskEvent ;
+#     bizrisk:hasRiskEventDescription "Inconsistent temporal classification"@en ;
+#     bizrisk:Historical true ;
+#     bizrisk:Future true ;
+#     rdfs:label "Invalid - Both Historical and Future"@en .

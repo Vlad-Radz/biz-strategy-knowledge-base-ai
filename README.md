@@ -1,120 +1,37 @@
 
-# Ontology design
-
-## Some choices
-
-Why specify that both rdfs:Class and owl:Class?
-- owl:Class signals you expect OWL reasoning capabilities (e.g., consistency checking, complex inferences).
-- rdfs:Class signals basic RDF Schema class typing.
---> to support a broad range of clients.
-
-Why SKOS and OWL:Class at the same time? Experiment: try to have best of both worlds: formal reasoning capabilities from OWL and vocabulary management from SKOS.
-
-Why DOLCE, although I like BFO?
-DOLCE rigorously treats mental objects as:
-- Non-physical and non-social, in that they have no independent physical location or existence outside an agent’s mind.
-- Specific to a single intentional agent: The same mental object cannot simultaneously depend on multiple agents.
-- Fundamental to representing cognitive states, attitudes, and internal representations such as beliefs, desires, intentions, and percepts.
---- BFO: about science. Not good to model abstract things.
-- Instead, DOLCE offered the concept of mental object: mental objects are classified as a subtype of non-physical objects that are specifically dependent on an intentional agent (such as a person or other agent capable of having mental states).These are distinct from social or physical objects and are considered “private” experiences or entities, in contrast to objects that exist independently in the external world
-- I just started.
-
-what is the "by" language?
-
-I aggregated risks on the family level, as I wanted to keep the knowledge base concise.
-
-## Ideas for improving the ontology:
-
-- Add :RiskTreatmentMethod, with possible categories: EliminateRisk, AvoidRisk, TransferRisk, ReduceRisk, RiskControl, ShareRisk, HaltSource, RemoveSource, RemoveImpact, RemoveConsequence, MonitorConsequence, MonitorImpact, MonitorRiskSource, etc.
-- Distinguish between risk response and treatment / preparation strategy? Can be both at the same time.
-- RiskEventCauses
+# Using ontologies in business strategy and operations
 
 
-## Other ontologies and taxonomies
+## Context and motivation
 
-for Consequences: look for risk-owl:PotentialConsequence in https://github.com/w3c/dpv/blob/master/2.1/risk/risk-owl.ttl
+This repository was created when everybody was thinking how to use AI in their organisations. The problem with AI models - especially with large language models (LLM) - is that they "hallucinate" as they lack true understanding of our world. So if you want that AI plays on your rules, you have to ground your world view a model. Keyword: business modeling, model-based systems engineering, enterprise architecture.
 
-AI risk ontology: https://delaramglp.github.io/airo/
+Luckily, specialists have been developing technologies and practices for modeling for decades. But materials about ontologies - way to express knowledge as an explicit, structured model - are often pretty hard to understand even for technical people. Thus I got the idea of developing a number of practice-oriented demos.
 
-Great taxonomy: https://www.openriskmanual.org/wiki/NACE_2.1_Classification
+This repository presents multiple real-world scenarios for developing a knowledge base which can be used to enhance AI capabilities.
 
+## What are ontologies
 
------------------------------------------------
+![alt text](001_information-extraction/content/ontology_bizrisk.png)
+*Visualization of an ontology with RDF Preview (Visual Stuido Code)*
 
-# Data extraction process
+📖 If your are new to ontologies, you can read my article: "Teaching AI to understand our world: explaining ontologies like you’re 5 years old" ([link](https://medium.com/ai-advances/teaching-ai-understand-our-world-explaining-ontologies-like-you-are-5-years-old-4e5653b5fcb1)), where I try to explain them as simple as possible, with some visuals. You can also check out another piece of me, "A Complaint from AI: 'I don\'t Understand Your Company'" ([link](https://medium.com/analysts-corner/a-complaint-from-ai-i-dont-understand-your-company-8314e39a2072)), where I explain the value of ontologies through the business lens.
 
-3 options for architecture:
-1.  use Jesus' github session29 to load ontology + write SHACL to control (if neosemantics works; you can see what violated the shapes) + session 30 to load pdf
-2. if needed: agentic checks + serialize not in Cypher, but in RDF, or even better: JSON + pydantic validator (and LLM that supports output in certain format)
-3. session 31: GraphRAG with schema (derived from ontology), entity resolution and Q&A (cypher construction based on onto)
+## Viewing the world as a graph
 
-- Будет экстрагировать только те классы, что надо
-- Post-processing: N10s has a Cypher endpoint, which can convert results of Cypher query to RDF -> if you want to prepare data for semantic web tools
+A graph consists of nodes and relationships between them. Anything can be modeled as a graph. If you think about it, you see graphs everywhere, be it process diagrams or your navigator.
 
-
------------------------------------------------
+![alt text](001_information-extraction/content/example_ontology_teamlead.png)
+_An exemplar graph illustrating some of the duties of a people leadership role in a consulting company (speaking from my experience)_
 
 
-# Connection to Wardley maps
+## Structure of the repository
 
-Goal: create situational awareness. E.g. KITS Eyecare can e.g. go to new markets; Redcare can merge with Docmorris.
-
-We can build modularily —-> Wardley maps:
-
-1. taxonomy of patterns -> create a lib -> link risks or financial situation to possible choices?
-    - https://learnwardleymapping.com/leadership/
-    - https://learnwardleymapping.com/climate/
-2. Populate the wardley map of a company based on annual report, to: stage of evolution, futurecurrent stage of evolution, inertia, required actions e.g. strategic investment; chance and risk, business termobap the products of compan
-
-
-cooperate, collaborate, conflict + border
-constraint, strategic investment
-
-
-
-# Future development
-
-Future development:
-- Wardley
-- reasoners
-- XBRL + MCP
-    - installation: https://sec-edgar-mcp.amorelli.tech/setup/installation
-- expose MCP server like here for strategy planning? https://github.com/stefanoamorelli/sec-edgar-mcp/blob/main/sec_edgar_mcp/server.py
-- process modeling
-- Decompose EU AI Act
-- Use graph data science to show strange processes
-
-
-
-## modeling processes
-
-2 ontologies: one for operational continuity, another for workflows (more dynamic one). --> Use BFO for both, extend it by classes OR use BPMN on Camunda.
-- BPMN: it is to describe process for humans. No easy way to transform to RDF. It can be exposed, searched and queried in Camunda
-
-Alternatives:
-- UML in XML to OWL: link.
-- Prov-O
-- Gist as alternative to BFO: link. gistBFO is aligned with BFO.
-- Alternative for BPMN: CMMN, for less structured workflows, more event-driven
-
-CDRTO concepts:
-- Control
-- Data
-- Resource
-- Trace
-- Online
-
-BFO. Extend via e.g. CDRTO classes or these classes: [link](https://www.linkedin.com/feed/update/urn:li:activity:7331379118527160320)
-- for things which have instances in space and time -> realism philosophy (allows to model things after scientific understanding, semantically correct)
-- Principles of realism: all classes will have instances; differences between classes are reflecting joints (суставы) of reality; don’t use the word „concept“ to name things that exist in reality; child cannot be an ontology class as child is not a universal (is a temporary thing), but a dog is.
-- BFO is like a legislation
-- Can I use CLIF in Turtle? Precedes etc.? Or is it part of BFO? —-> yes and yes
-
-Modeling of processes:
-- events vs. state. Events: Look into OCEL: [link](https://www.ocel-standard.org/2.0/ocel20_specification.pdf)
-- Processes vs subprocesses, CDRTO
-- temporal relationships: sequential (precedes), overlap (contains, overlaps), distance (5 mins before), periodicity (every Thu); also causal, participation, hierarchical relationship
-
-Alternatives to GraphRAG:
-- https://github.com/AuvaLab/itext2kg
-- https://github.com/LMMApplication/RAKG 
+| Folder      | Scenario |  Technologies used | Status |
+| ----------- | ----------- | ------------- | ------------- |
+| `001_information-extraction/` | Extract high-quality information from text and construct a knowledge graph | Python, Neo4j, GraphRAG, ontologies (Turtle, OWL), embeddings & semantic search | ✅ implemented as a ready solution |
+| `002_master-data-and-asset-management/` | Define business concepts once - use them everywhere | Ontologies (Turtle, OWL), Python, AWS | ✅ implemented as text guide |
+| `003_security-and-audit/` | Use ontology as single souce of truth for IT security framework | Ontologies (Turtle, OWL), Python, Pydantic | ✅ implemented as text guide |
+| `004_diagrams-to-process-models/` | Construct digital twins for business processes using diagrams as foundation | PlantUML, Neo4j | 🚧 in progress |
+| `005_mindful-machines/` | Provide context for telemetry data | ... | 🚧 in progress |
+| `006_synthetic-world/` | Generate accurate synthetic data based on ontology | ... | 🚧 in progress |

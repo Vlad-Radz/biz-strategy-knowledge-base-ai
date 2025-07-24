@@ -1,0 +1,33 @@
+PREFIX org: <http://example.com/organization#>
+PREFIX inst: <http://example.com/instances#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Query 3: Cost allocation and governance mapping
+# Find all external service scopes with their cost centers and budget codes for financial reporting
+
+SELECT ?scope ?scopeLabel ?scopeType ?scopeIdentifier ?orgUnit ?orgUnitType ?orgLabel 
+       ?costCenter ?budgetCode ?accessLevel ?governancePolicy
+WHERE {
+    # Find all external service scopes
+    ?scope a org:ExternalServiceScope ;
+           rdfs:label ?scopeLabel ;
+           org:scopeType ?scopeType ;
+           org:scopeIdentifier ?scopeIdentifier ;
+           org:isAssignedTo ?orgUnit .
+    
+    # Get organizational unit information
+    ?orgUnit a ?orgUnitType ;
+             rdfs:label ?orgLabel .
+    
+    # Get financial and governance information
+    OPTIONAL { ?orgUnit org:costCenter ?costCenter }
+    OPTIONAL { ?orgUnit org:budgetCode ?budgetCode }
+    OPTIONAL { ?orgUnit org:accessLevel ?accessLevel }
+    OPTIONAL { ?orgUnit org:governancePolicy ?governancePolicy }
+    
+    # Filter to only show organizational unit types
+    FILTER(?orgUnitType IN (org:Organization, org:Portfolio, org:Program, 
+                           org:Project, org:Product, org:Department, 
+                           org:Team, org:Operations))
+}
+ORDER BY ?scopeType ?orgUnitType ?orgLabel
