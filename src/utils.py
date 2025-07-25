@@ -129,9 +129,10 @@ def getSchemaFromOnto(g):
     for d in doms:
        for r in rans:
           triples.append((d,relname,r))
-    return schema_builder.create_schema_model(node_types=entities, 
-                     relations=rels,
-                     potential_schema=triples)
+  
+  return schema_builder.create_schema_model(node_types=entities, 
+                   relationship_types=rels,
+                   patterns=triples)
 
 
 def getPKs(g):

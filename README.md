@@ -82,6 +82,7 @@ constraint, strategic investment
 # Future development
 
 Future development:
+- check alternatives to GraphRAG --> think of solution for generating libraries of knowledge. E.g. strategy patterns. Inductive patterns for ontology construction and maintenance.
 - Wardley
 - reasoners: subclass relationships, domain/range constraints, owl:sameAs, owl:inverseOf, disjoint classes, transitive properties, SWRL rules. Description logic inference: owl:intersectionOf, owl:unionOf, owl:someValuesFrom ——> use Apache Jena to infer data before loading to Neo4j
 - XBRL + MCP
