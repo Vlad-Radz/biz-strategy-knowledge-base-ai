@@ -27,6 +27,8 @@ UPDATE:
 - how to omit the lexical graph and only leave the domain one?
 - write code for calling the taxonomy, and each Risk -> extract name -> fit into taxonomy -> generate new data and connect with other nodes + place old name as comment -> remove old node
 - revisit other problems mentioned above
+- think what to do with large PDFs. How chunks are currently handled?
+- check alternatives to GraphRAG --> think of solution for generating libraries of knowledge. E.g. strategy patterns. Inductive patterns for ontology construction and maintenance.
 """
 
 import asyncio
