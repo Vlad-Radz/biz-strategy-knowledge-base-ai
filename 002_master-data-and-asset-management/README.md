@@ -6,6 +6,11 @@ This is the showcase for how ontologies can help with:
 
 Both problems are related, and asset management is just one of the use case that gets unlocked when you have semantic master data, be it taxonomies - hierarchical set of concepts; ontologies - full metamodel built on top of taxonomies which says what is possible in your worldview and what is not; or just a controlled vocabulary or thesaurus.
 
+⚠️ **Note: the code used here was not used under real circumstances, but only serve demonstration purposes.**
+- RDF data was visualized and loaded into a graph storage, and SPARQL queries were executed in order to validate that they work in general; however, I cannot exclude bugs, redundancies or any other poor design decisions.
+- The AWS policies and cloudquery queries were not tested.
+
+
 ![alt text](content/org-units.png)
 
 ## Problem statements
@@ -16,7 +21,7 @@ Most organisational units nowadays would use some sort of digital tools, like e.
 
 ***If you or your automation software aka "AI agents" would get a request to find out the costs of digital tools of each of our "projects", how would you interpret this?*** (I am not sure if the request in this form makes a lot sense, but I wanted to pick an understandable metaphor)
 
-Maybe you use some kind of tool - like e.g. cloudquery - to pull data from different services into one database or data warehouse. You would look into the table and find all those "accounts", "organisations" and "projects". What is what? And what is what you need?
+Maybe you use some kind of tool - like e.g. [cloudquery](https://github.com/cloudquery/cloudquery) - to pull data from different services into one database or data warehouse. You would look into the table and find all those "accounts", "organisations" and "projects". What is what? And what is what you need?
 
 ## Ontology as foundation
 
