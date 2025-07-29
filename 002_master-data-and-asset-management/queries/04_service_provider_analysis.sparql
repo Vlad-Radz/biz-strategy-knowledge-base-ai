@@ -1,0 +1,34 @@
+PREFIX org: <http://example.com/organization#>
+PREFIX inst: <http://example.com/instances#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Query 4: Service provider analysis
+# Find all services grouped by provider and show their organizational assignments
+
+SELECT ?provider ?providerLabel ?scopeType ?scope ?scopeLabel ?scopeIdentifier 
+       ?orgUnit ?orgUnitType ?orgLabel
+WHERE {
+    # Find all service providers and their scopes
+    ?provider a ?providerType ;
+              rdfs:label ?providerLabel .
+    
+    ?scope org:isProvidedBy ?provider ;
+           org:scopeType ?scopeType ;
+           rdfs:label ?scopeLabel ;
+           org:scopeIdentifier ?scopeIdentifier ;
+           org:isAssignedTo ?orgUnit .
+    
+    # Get organizational unit information
+    ?orgUnit a ?orgUnitType ;
+             rdfs:label ?orgLabel .
+    
+    # Filter to show only service provider types
+    FILTER(?providerType IN (org:AWSProvider, org:AzureProvider, 
+                            org:JiraProvider, org:GitHubProvider))
+    
+    # Filter to only show organizational unit types
+    FILTER(?orgUnitType IN (org:Organization, org:Portfolio, org:Program, 
+                           org:Project, org:Product, org:Department, 
+                           org:Team, org:Operations))
+}
+ORDER BY ?providerLabel ?scopeType ?orgLabel

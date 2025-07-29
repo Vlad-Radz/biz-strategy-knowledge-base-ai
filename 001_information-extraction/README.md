@@ -41,7 +41,7 @@ dpv:
 
 for Consequences: look for risk-owl:PotentialConsequence in https://github.com/w3c/dpv/blob/master/2.1/risk/risk-owl.ttl
 
-AI risk ontology: https://delaramglp.github.io/airo/
+AI risk ontology: https://delaramglp.github.io/airo/ and another one: https://www.linkedin.com/posts/razirais_etsi-artificial-intelligence-threat-ontology-activity-7355311015246381056-zmlf
 
 Great taxonomy: https://www.openriskmanual.org/wiki/NACE_2.1_Classification
 
@@ -84,7 +84,8 @@ constraint, strategic investment
 Future development:
 - check alternatives to GraphRAG --> think of solution for generating libraries of knowledge. E.g. strategy patterns. Inductive patterns for ontology construction and maintenance.
 - Wardley
-- reasoners: subclass relationships, domain/range constraints, owl:sameAs, owl:inverseOf, disjoint classes, transitive properties, SWRL rules. Description logic inference: owl:intersectionOf, owl:unionOf, owl:someValuesFrom ——> use Apache Jena to infer data before loading to Neo4j
+- reasoners: subclass relationships, domain/range constraints, owl:sameAs, owl:inverseOf, disjoint classes, transitive properties, SWRL rules. Description logic inference: owl:intersectionOf, owl:unionOf, owl:someValuesFrom ——> use Apache Jena to infer data before loading to Neo4j.  
+    - If you want to work with RDF triple and not Neo4j, then you don't necessarily need inference. Instead, you could put a lot of the (business) logic into the query rather than into the data model. SPARQL makes it possible to establish a context of operation in ways that inferencing does not. + use SHACL for validation.
 - XBRL + MCP
     - installation: https://sec-edgar-mcp.amorelli.tech/setup/installation
 - expose MCP server like here for strategy planning? https://github.com/stefanoamorelli/sec-edgar-mcp/blob/main/sec_edgar_mcp/server.py

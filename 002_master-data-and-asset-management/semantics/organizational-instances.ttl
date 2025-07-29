@@ -1,0 +1,334 @@
+@prefix org: <http://example.com/organization#> .
+@prefix inst: <http://example.com/instances#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#################################################################
+#    Organization and Organizational Units
+#################################################################
+
+# Root organization
+inst:TechCorpEnterprise a org:Organization ;
+    rdfs:label "TechCorp Enterprise"@en ;
+    org:organizationId "TECHCORP-001" ;
+    rdfs:comment "Main enterprise organization"@en .
+
+# Strategic Level - Portfolios
+inst:DigitalTransformationPortfolio a org:Portfolio ;
+    rdfs:label "Digital Transformation Portfolio"@en ;
+    org:organizationId "PORT-DT-001" ;
+    org:budgetCode "BG-DT-2025" ;
+    org:costCenter "CC-DT-001" ;
+    org:accessLevel "Strategic" ;
+    org:governancePolicy "Enterprise Architecture Governance" ;
+    org:belongsToOrganization inst:TechCorpEnterprise .
+
+inst:ProductInnovationPortfolio a org:Portfolio ;
+    rdfs:label "Product Innovation Portfolio"@en ;
+    org:organizationId "PORT-PI-001" ;
+    org:budgetCode "BG-PI-2025" ;
+    org:costCenter "CC-PI-001" ;
+    org:accessLevel "Strategic" ;
+    org:belongsToOrganization inst:TechCorpEnterprise .
+
+# Tactical Level - Programs
+inst:CloudMigrationProgram a org:Program ;
+    rdfs:label "Cloud Migration Program"@en ;
+    org:organizationId "PROG-CM-001" ;
+    org:budgetCode "BG-CM-2025" ;
+    org:costCenter "CC-CM-001" ;
+    org:accessLevel "Confidential" ;
+    org:governancePolicy "Cloud Security Policy" ;
+    org:reportsTo inst:DigitalTransformationPortfolio .
+
+inst:CustomerExperienceProgram a org:Program ;
+    rdfs:label "Customer Experience Enhancement Program"@en ;
+    org:organizationId "PROG-CX-001" ;
+    org:budgetCode "BG-CX-2025" ;
+    org:costCenter "CC-CX-001" ;
+    org:accessLevel "Confidential" ;
+    org:reportsTo inst:ProductInnovationPortfolio .
+
+# Project Level
+inst:ECommerceReplatformProject a org:Project ;
+    rdfs:label "E-Commerce Platform Replatform Project"@en ;
+    org:organizationId "PROJ-ECP-001" ;
+    org:budgetCode "BG-ECP-2025" ;
+    org:costCenter "CC-ECP-001" ;
+    org:accessLevel "Restricted" ;
+    org:governancePolicy "Project Management Standard" ;
+    org:reportsTo inst:CloudMigrationProgram .
+
+inst:MobileAppProject a org:Project ;
+    rdfs:label "Mobile Application Development Project"@en ;
+    org:organizationId "PROJ-MAD-001" ;
+    org:budgetCode "BG-MAD-2025" ;
+    org:costCenter "CC-MAD-001" ;
+    org:accessLevel "Restricted" ;
+    org:reportsTo inst:CustomerExperienceProgram .
+
+inst:DataPlatformProject a org:Project ;
+    rdfs:label "Enterprise Data Platform Project"@en ;
+    org:organizationId "PROJ-EDP-001" ;
+    org:budgetCode "BG-EDP-2025" ;
+    org:costCenter "CC-EDP-001" ;
+    org:accessLevel "Highly Restricted" ;
+    org:reportsTo inst:CloudMigrationProgram .
+
+# Product Level
+inst:ECommerceProduct a org:Product ;
+    rdfs:label "E-Commerce Platform Product"@en ;
+    org:organizationId "PROD-ECP-001" ;
+    org:budgetCode "BG-PROD-ECP-2025" ;
+    org:costCenter "CC-PROD-ECP-001" ;
+    org:accessLevel "Public" ;
+    org:belongsToOrganization inst:TechCorpEnterprise .
+
+inst:DataAnalyticsProduct a org:Product ;
+    rdfs:label "Data Analytics Platform Product"@en ;
+    org:organizationId "PROD-DAP-001" ;
+    org:budgetCode "BG-PROD-DAP-2025" ;
+    org:costCenter "CC-PROD-DAP-001" ;
+    org:accessLevel "Internal" ;
+    org:belongsToOrganization inst:TechCorpEnterprise .
+
+# Operational Level - Departments
+inst:ITDepartment a org:Department ;
+    rdfs:label "Information Technology Department"@en ;
+    org:organizationId "DEPT-IT-001" ;
+    org:budgetCode "BG-IT-OPS-2025" ;
+    org:costCenter "CC-IT-OPS-001" ;
+    org:accessLevel "Internal" ;
+    org:governancePolicy "IT Operations Policy" ;
+    org:belongsToOrganization inst:TechCorpEnterprise .
+
+inst:FinanceDepartment a org:Department ;
+    rdfs:label "Finance Department"@en ;
+    org:organizationId "DEPT-FIN-001" ;
+    org:budgetCode "BG-FIN-OPS-2025" ;
+    org:costCenter "CC-FIN-OPS-001" ;
+    org:accessLevel "Highly Restricted" ;
+    org:belongsToOrganization inst:TechCorpEnterprise .
+
+inst:MarketingDepartment a org:Department ;
+    rdfs:label "Marketing Department"@en ;
+    org:organizationId "DEPT-MKT-001" ;
+    org:budgetCode "BG-MKT-OPS-2025" ;
+    org:costCenter "CC-MKT-OPS-001" ;
+    org:accessLevel "Internal" ;
+    org:belongsToOrganization inst:TechCorpEnterprise .
+
+# Team Level
+inst:DevOpsTeam a org:Team ;
+    rdfs:label "DevOps Engineering Team"@en ;
+    org:organizationId "TEAM-DEVOPS-001" ;
+    org:costCenter "CC-DEVOPS-001" ;
+    org:accessLevel "Technical" ;
+    org:reportsTo inst:ITDepartment .
+
+inst:DataEngineeringTeam a org:Team ;
+    rdfs:label "Data Engineering Team"@en ;
+    org:organizationId "TEAM-DE-001" ;
+    org:costCenter "CC-DE-001" ;
+    org:accessLevel "Technical" ;
+    org:reportsTo inst:ITDepartment .
+
+inst:SecurityTeam a org:Team ;
+    rdfs:label "Information Security Team"@en ;
+    org:organizationId "TEAM-SEC-001" ;
+    org:costCenter "CC-SEC-001" ;
+    org:accessLevel "Security" ;
+    org:reportsTo inst:ITDepartment .
+
+# Operations
+inst:ITOperations a org:Operations ;
+    rdfs:label "IT Operations"@en ;
+    org:organizationId "OPS-IT-001" ;
+    org:budgetCode "BG-IT-OPS-2025" ;
+    org:costCenter "CC-IT-OPS-001" ;
+    org:accessLevel "Operational" ;
+    org:belongsToOrganization inst:TechCorpEnterprise .
+
+#################################################################
+#    Service Providers
+#################################################################
+
+inst:AWSServiceProvider a org:AWSProvider ;
+    rdfs:label "Amazon Web Services"@en ;
+    rdfs:comment "Cloud computing services provider"@en .
+
+inst:JiraServiceProvider a org:JiraProvider ;
+    rdfs:label "Atlassian Jira Cloud"@en ;
+    rdfs:comment "Project management and issue tracking service"@en .
+
+inst:GitHubServiceProvider a org:GitHubProvider ;
+    rdfs:label "GitHub Enterprise"@en ;
+    rdfs:comment "Source code management and collaboration platform"@en .
+
+inst:AzureServiceProvider a org:AzureProvider ;
+    rdfs:label "Microsoft Azure"@en ;
+    rdfs:comment "Cloud computing platform and services"@en .
+
+#################################################################
+#    External Service Scopes - AWS
+#################################################################
+
+# AWS Organization level
+inst:TechCorpAWSOrganization a org:CloudServiceScope ;
+    rdfs:label "TechCorp AWS Organization"@en ;
+    org:scopeIdentifier "o-1234567890" ;
+    org:scopeType "AWS-Organization" ;
+    org:scopeUrl <https://console.aws.amazon.com/organizations/> ;
+    org:isAssignedTo inst:TechCorpEnterprise ;
+    org:isProvidedBy inst:AWSServiceProvider .
+
+# AWS Accounts for different purposes
+inst:ECommerceAWSAccount a org:CloudServiceScope ;
+    rdfs:label "E-Commerce Production AWS Account"@en ;
+    org:scopeIdentifier "123456789012" ;
+    org:scopeType "AWS-Account" ;
+    org:scopeUrl <https://123456789012.signin.aws.amazon.com/console> ;
+    org:isAssignedTo inst:ECommerceProduct ;
+    org:isProvidedBy inst:AWSServiceProvider .
+
+inst:ProjectDevAWSAccount a org:CloudServiceScope ;
+    rdfs:label "Development Projects AWS Account"@en ;
+    org:scopeIdentifier "123456789013" ;
+    org:scopeType "AWS-Account" ;
+    org:scopeUrl <https://123456789013.signin.aws.amazon.com/console> ;
+    org:isAssignedTo inst:ECommerceReplatformProject ;
+    org:isProvidedBy inst:AWSServiceProvider .
+
+inst:DataPlatformAWSAccount a org:CloudServiceScope ;
+    rdfs:label "Data Platform AWS Account"@en ;
+    org:scopeIdentifier "123456789014" ;
+    org:scopeType "AWS-Account" ;
+    org:scopeUrl <https://123456789014.signin.aws.amazon.com/console> ;
+    org:isAssignedTo inst:DataAnalyticsProduct ;
+    org:isProvidedBy inst:AWSServiceProvider .
+
+inst:SecurityAWSAccount a org:CloudServiceScope ;
+    rdfs:label "Security Services AWS Account"@en ;
+    org:scopeIdentifier "123456789015" ;
+    org:scopeType "AWS-Account" ;
+    org:scopeUrl <https://123456789015.signin.aws.amazon.com/console> ;
+    org:isAssignedTo inst:SecurityTeam ;
+    org:isProvidedBy inst:AWSServiceProvider .
+
+inst:SharedServicesAWSAccount a org:CloudServiceScope ;
+    rdfs:label "Shared Services AWS Account"@en ;
+    org:scopeIdentifier "123456789016" ;
+    org:scopeType "AWS-Account" ;
+    org:scopeUrl <https://123456789016.signin.aws.amazon.com/console> ;
+    org:isAssignedTo inst:ITOperations ;
+    org:isProvidedBy inst:AWSServiceProvider .
+
+#################################################################
+#    External Service Scopes - Jira Projects
+#################################################################
+
+inst:ECommerceJiraProject a org:ProjectManagementScope ;
+    rdfs:label "E-Commerce Replatform Jira Project"@en ;
+    org:scopeIdentifier "ECOM" ;
+    org:scopeType "Jira-Project" ;
+    org:scopeUrl <https://techcorp.atlassian.net/projects/ECOM> ;
+    org:isAssignedTo inst:ECommerceReplatformProject ;
+    org:isProvidedBy inst:JiraServiceProvider .
+
+inst:MobileAppJiraProject a org:ProjectManagementScope ;
+    rdfs:label "Mobile App Development Jira Project"@en ;
+    org:scopeIdentifier "MOBILE" ;
+    org:scopeType "Jira-Project" ;
+    org:scopeUrl <https://techcorp.atlassian.net/projects/MOBILE> ;
+    org:isAssignedTo inst:MobileAppProject ;
+    org:isProvidedBy inst:JiraServiceProvider .
+
+inst:DataPlatformJiraProject a org:ProjectManagementScope ;
+    rdfs:label "Data Platform Jira Project"@en ;
+    org:scopeIdentifier "DATAPLAT" ;
+    org:scopeType "Jira-Project" ;
+    org:scopeUrl <https://techcorp.atlassian.net/projects/DATAPLAT> ;
+    org:isAssignedTo inst:DataPlatformProject ;
+    org:isProvidedBy inst:JiraServiceProvider .
+
+inst:ITOpsJiraProject a org:ProjectManagementScope ;
+    rdfs:label "IT Operations Jira Project"@en ;
+    org:scopeIdentifier "ITOPS" ;
+    org:scopeType "Jira-Project" ;
+    org:scopeUrl <https://techcorp.atlassian.net/projects/ITOPS> ;
+    org:isAssignedTo inst:ITOperations ;
+    org:isProvidedBy inst:JiraServiceProvider .
+
+#################################################################
+#    External Service Scopes - GitHub Repositories
+#################################################################
+
+inst:ECommerceGitHubOrg a org:SourceControlScope ;
+    rdfs:label "TechCorp E-Commerce GitHub Organization"@en ;
+    org:scopeIdentifier "techcorp-ecommerce" ;
+    org:scopeType "GitHub-Organization" ;
+    org:scopeUrl <https://github.com/techcorp-ecommerce> ;
+    org:isAssignedTo inst:ECommerceProduct ;
+    org:isProvidedBy inst:GitHubServiceProvider .
+
+inst:ECommerceFrontendRepo a org:SourceControlScope ;
+    rdfs:label "E-Commerce Frontend Repository"@en ;
+    org:scopeIdentifier "techcorp-ecommerce/frontend-app" ;
+    org:scopeType "GitHub-Repository" ;
+    org:scopeUrl <https://github.com/techcorp-ecommerce/frontend-app> ;
+    org:isAssignedTo inst:ECommerceReplatformProject ;
+    org:isProvidedBy inst:GitHubServiceProvider .
+
+inst:ECommerceBackendRepo a org:SourceControlScope ;
+    rdfs:label "E-Commerce Backend Repository"@en ;
+    org:scopeIdentifier "techcorp-ecommerce/backend-api" ;
+    org:scopeType "GitHub-Repository" ;
+    org:scopeUrl <https://github.com/techcorp-ecommerce/backend-api> ;
+    org:isAssignedTo inst:ECommerceReplatformProject ;
+    org:isProvidedBy inst:GitHubServiceProvider .
+
+inst:MobileAppRepo a org:SourceControlScope ;
+    rdfs:label "Mobile Application Repository"@en ;
+    org:scopeIdentifier "techcorp/mobile-app" ;
+    org:scopeType "GitHub-Repository" ;
+    org:scopeUrl <https://github.com/techcorp/mobile-app> ;
+    org:isAssignedTo inst:MobileAppProject ;
+    org:isProvidedBy inst:GitHubServiceProvider .
+
+inst:DataPlatformRepo a org:SourceControlScope ;
+    rdfs:label "Data Platform Repository"@en ;
+    org:scopeIdentifier "techcorp-data/platform" ;
+    org:scopeType "GitHub-Repository" ;
+    org:scopeUrl <https://github.com/techcorp-data/platform> ;
+    org:isAssignedTo inst:DataPlatformProject ;
+    org:isProvidedBy inst:GitHubServiceProvider .
+
+inst:InfrastructureRepo a org:SourceControlScope ;
+    rdfs:label "Infrastructure as Code Repository"@en ;
+    org:scopeIdentifier "techcorp-ops/infrastructure" ;
+    org:scopeType "GitHub-Repository" ;
+    org:scopeUrl <https://github.com/techcorp-ops/infrastructure> ;
+    org:isAssignedTo inst:DevOpsTeam ;
+    org:isProvidedBy inst:GitHubServiceProvider .
+
+#################################################################
+#    External Service Scopes - Azure
+#################################################################
+
+inst:AnalyticsAzureSubscription a org:CloudServiceScope ;
+    rdfs:label "Analytics Azure Subscription"@en ;
+    org:scopeIdentifier "12345678-1234-1234-1234-123456789012" ;
+    org:scopeType "Azure-Subscription" ;
+    org:scopeUrl <https://portal.azure.com/> ;
+    org:isAssignedTo inst:DataAnalyticsProduct ;
+    org:isProvidedBy inst:AzureServiceProvider .
+
+inst:DevTestAzureSubscription a org:CloudServiceScope ;
+    rdfs:label "Development Testing Azure Subscription"@en ;
+    org:scopeIdentifier "12345678-1234-1234-1234-123456789013" ;
+    org:scopeType "Azure-Subscription" ;
+    org:scopeUrl <https://portal.azure.com/> ;
+    org:isAssignedTo inst:MobileAppProject ;
+    org:isProvidedBy inst:AzureServiceProvider .

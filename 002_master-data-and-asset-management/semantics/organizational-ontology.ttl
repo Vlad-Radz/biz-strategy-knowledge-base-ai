@@ -1,0 +1,268 @@
+@prefix : <http://example.com/organization#> .
+@prefix org: <http://example.com/organization#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+<http://example.com/organization> rdf:type owl:Ontology ;
+    rdfs:label "Organizational Structure Ontology for Asset Management"@en ;
+    rdfs:comment """
+    An ontology defining organizational units based on Enterprise Architecture frameworks 
+    (TOGAF, COBIT) to enable semantic master data management and asset governance.
+    Supports mapping external resources to organizational structures for cost allocation,
+    governance policies, and access control.
+    """@en ;
+    owl:versionInfo "1.0" ;
+    dct:created "2025-01-29"^^xsd:date .
+
+#################################################################
+#    Core Organizational Classes
+#################################################################
+
+# Root organizational entity
+org:Organization a owl:Class ;
+    rdfs:label "Organization"@en ;
+    rdfs:comment "The root entity representing the entire enterprise or company"@en ;
+    skos:definition "A legal entity or enterprise that contains all other organizational units"@en .
+
+# Strategic level - Portfolio management
+org:Portfolio a owl:Class ;
+    rdfs:label "Portfolio"@en ;
+    rdfs:comment "A collection of programs and projects managed together to achieve strategic objectives"@en ;
+    skos:definition "Strategic grouping of initiatives aligned with business strategy and investment priorities"@en ;
+    rdfs:subClassOf org:OrganizationalUnit .
+
+org:Program a owl:Class ;
+    rdfs:label "Program"@en ;
+    rdfs:comment "A group of related projects managed together to obtain benefits not available from managing them individually"@en ;
+    skos:definition "Temporary organizational structure to coordinate multiple related projects"@en ;
+    rdfs:subClassOf org:OrganizationalUnit .
+
+# Tactical level - Project and product delivery
+org:Project a owl:Class ;
+    rdfs:label "Project"@en ;
+    rdfs:comment "A temporary endeavor undertaken to create a unique product, service, or result"@en ;
+    skos:definition "Time-bound initiative with specific deliverables and success criteria"@en ;
+    rdfs:subClassOf org:OrganizationalUnit .
+
+org:Product a owl:Class ;
+    rdfs:label "Product"@en ;
+    rdfs:comment "A business capability or solution that delivers value to customers"@en ;
+    skos:definition "Long-term business capability that generates revenue or value"@en ;
+    rdfs:subClassOf org:OrganizationalUnit .
+
+# Operational level - Day-to-day operations
+org:Department a owl:Class ;
+    rdfs:label "Department"@en ;
+    rdfs:comment "A functional unit within the organization responsible for specific business functions"@en ;
+    skos:definition "Permanent organizational structure focused on specific business functions"@en ;
+    rdfs:subClassOf org:OrganizationalUnit .
+
+org:Team a owl:Class ;
+    rdfs:label "Team"@en ;
+    rdfs:comment "A small group of people working together towards common goals"@en ;
+    skos:definition "Basic organizational unit consisting of individuals with complementary skills"@en ;
+    rdfs:subClassOf org:OrganizationalUnit .
+
+org:Operations a owl:Class ;
+    rdfs:label "Operations"@en ;
+    rdfs:comment "Ongoing business activities that produce goods or services"@en ;
+    skos:definition "Continuous business processes and activities that sustain the organization"@en ;
+    rdfs:subClassOf org:OrganizationalUnit .
+
+# Abstract parent class
+org:OrganizationalUnit a owl:Class ;
+    rdfs:label "Organizational Unit"@en ;
+    rdfs:comment "Abstract parent class for all types of organizational structures"@en ;
+    skos:definition "Any identifiable part of an organization with specific responsibilities and governance"@en .
+
+#################################################################
+#    External Resource Management Classes
+#################################################################
+
+org:ExternalServiceScope a owl:Class ;
+    rdfs:label "External Service Scope"@en ;
+    rdfs:comment "A bounded context within an external service that can be mapped to organizational units"@en ;
+    skos:definition """
+    Represents a specific scope or boundary within external services (AWS accounts, 
+    Jira projects, GitHub repositories) that can be governed and allocated to 
+    organizational units for cost tracking and access control.
+    """@en .
+
+org:CloudServiceScope a owl:Class ;
+    rdfs:subClassOf org:ExternalServiceScope ;
+    rdfs:label "Cloud Service Scope"@en ;
+    rdfs:comment "A scope within cloud services like AWS, Azure, or GCP"@en ;
+    skos:definition "Cloud-specific boundary for resource allocation and governance"@en .
+
+org:ProjectManagementScope a owl:Class ;
+    rdfs:subClassOf org:ExternalServiceScope ;
+    rdfs:label "Project Management Scope"@en ;
+    rdfs:comment "A scope within project management tools like Jira or Azure DevOps"@en ;
+    skos:definition "Project management tool boundary for tracking work and deliverables"@en .
+
+org:SourceControlScope a owl:Class ;
+    rdfs:subClassOf org:ExternalServiceScope ;
+    rdfs:label "Source Control Scope"@en ;
+    rdfs:comment "A scope within source control systems like GitHub or GitLab"@en ;
+    skos:definition "Source control boundary for code management and collaboration"@en .
+
+#################################################################
+#    Service Provider Classification
+#################################################################
+
+org:ServiceProvider a owl:Class ;
+    rdfs:label "Service Provider"@en ;
+    rdfs:comment "An external organization that provides services to the enterprise"@en ;
+    skos:definition "Third-party vendor or platform provider"@en .
+
+# Specific service providers
+org:AWSProvider a owl:Class ;
+    rdfs:subClassOf org:ServiceProvider ;
+    rdfs:label "Amazon Web Services Provider"@en .
+
+org:AzureProvider a owl:Class ;
+    rdfs:subClassOf org:ServiceProvider ;
+    rdfs:label "Microsoft Azure Provider"@en .
+
+org:JiraProvider a owl:Class ;
+    rdfs:subClassOf org:ServiceProvider ;
+    rdfs:label "Atlassian Jira Provider"@en .
+
+org:GitHubProvider a owl:Class ;
+    rdfs:subClassOf org:ServiceProvider ;
+    rdfs:label "GitHub Provider"@en .
+
+#################################################################
+#    Object Properties - Relationships
+#################################################################
+
+org:isAssignedTo a owl:ObjectProperty ;
+    rdfs:label "is assigned to"@en ;
+    rdfs:comment "Links an external service scope to an organizational unit"@en ;
+    rdfs:domain org:ExternalServiceScope ;
+    rdfs:range org:OrganizationalUnit ;
+    skos:definition "Primary relationship for assigning external resources to organizational ownership"@en .
+
+org:hasScope a owl:ObjectProperty ;
+    rdfs:label "has scope"@en ;
+    rdfs:comment "Links an organizational unit to external service scopes it owns"@en ;
+    rdfs:domain org:OrganizationalUnit ;
+    rdfs:range org:ExternalServiceScope ;
+    owl:inverseOf org:isAssignedTo .
+
+org:belongsToOrganization a owl:ObjectProperty ;
+    rdfs:label "belongs to organization"@en ;
+    rdfs:comment "Links organizational units to their parent organization"@en ;
+    rdfs:domain org:OrganizationalUnit ;
+    rdfs:range org:Organization .
+
+org:containsUnit a owl:ObjectProperty ;
+    rdfs:label "contains unit"@en ;
+    rdfs:comment "Hierarchical relationship between organizational units"@en ;
+    rdfs:domain org:OrganizationalUnit ;
+    rdfs:range org:OrganizationalUnit .
+
+org:isProvidedBy a owl:ObjectProperty ;
+    rdfs:label "is provided by"@en ;
+    rdfs:comment "Links external service scopes to their service providers"@en ;
+    rdfs:domain org:ExternalServiceScope ;
+    rdfs:range org:ServiceProvider .
+
+org:reportsTo a owl:ObjectProperty ;
+    rdfs:label "reports to"@en ;
+    rdfs:comment "Reporting relationship between organizational units"@en ;
+    rdfs:domain org:OrganizationalUnit ;
+    rdfs:range org:OrganizationalUnit .
+
+#################################################################
+#    Data Properties
+#################################################################
+
+org:organizationId a owl:DatatypeProperty ;
+    rdfs:label "organization ID"@en ;
+    rdfs:comment "Unique identifier for organizational units"@en ;
+    rdfs:domain org:OrganizationalUnit ;
+    rdfs:range xsd:string .
+
+org:scopeIdentifier a owl:DatatypeProperty ;
+    rdfs:label "scope identifier"@en ;
+    rdfs:comment "External system identifier for the service scope"@en ;
+    rdfs:domain org:ExternalServiceScope ;
+    rdfs:range xsd:string .
+
+org:budgetCode a owl:DatatypeProperty ;
+    rdfs:label "budget code"@en ;
+    rdfs:comment "Financial code for cost allocation"@en ;
+    rdfs:domain org:OrganizationalUnit ;
+    rdfs:range xsd:string .
+
+org:governancePolicy a owl:DatatypeProperty ;
+    rdfs:label "governance policy"@en ;
+    rdfs:comment "Reference to applicable governance policies"@en ;
+    rdfs:domain org:OrganizationalUnit ;
+    rdfs:range xsd:string .
+
+org:costCenter a owl:DatatypeProperty ;
+    rdfs:label "cost center"@en ;
+    rdfs:comment "Accounting cost center for financial tracking"@en ;
+    rdfs:domain org:OrganizationalUnit ;
+    rdfs:range xsd:string .
+
+org:accessLevel a owl:DatatypeProperty ;
+    rdfs:label "access level"@en ;
+    rdfs:comment "Security access level classification"@en ;
+    rdfs:domain org:OrganizationalUnit ;
+    rdfs:range xsd:string .
+
+org:scopeType a owl:DatatypeProperty ;
+    rdfs:label "scope type"@en ;
+    rdfs:comment "Type classification of the external service scope"@en ;
+    rdfs:domain org:ExternalServiceScope ;
+    rdfs:range xsd:string .
+
+org:scopeUrl a owl:DatatypeProperty ;
+    rdfs:label "scope URL"@en ;
+    rdfs:comment "Web URL or endpoint for accessing the external service scope"@en ;
+    rdfs:domain org:ExternalServiceScope ;
+    rdfs:range xsd:anyURI .
+
+#################################################################
+#    Governance and Policy Classes
+#################################################################
+
+org:GovernancePolicy a owl:Class ;
+    rdfs:label "Governance Policy"@en ;
+    rdfs:comment "Rules and guidelines that apply to organizational units"@en ;
+    skos:definition "Formal policies governing behavior, compliance, and operations"@en .
+
+org:hasPolicy a owl:ObjectProperty ;
+    rdfs:label "has policy"@en ;
+    rdfs:comment "Links organizational units to applicable policies"@en ;
+    rdfs:domain org:OrganizationalUnit ;
+    rdfs:range org:GovernancePolicy .
+
+#################################################################
+#    Disjoint Axioms
+#################################################################
+
+# Organizational unit types are mutually exclusive
+[] a owl:AllDisjointClasses ;
+   owl:members ( org:Portfolio org:Program org:Project org:Product 
+                 org:Department org:Team org:Operations ) .
+
+# Service provider types are mutually exclusive
+[] a owl:AllDisjointClasses ;
+   owl:members ( org:AWSProvider org:AzureProvider org:JiraProvider org:GitHubProvider ) .
+
+# External service scope types are mutually exclusive
+[] a owl:AllDisjointClasses ;
+   owl:members ( org:CloudServiceScope org:ProjectManagementScope org:SourceControlScope ) .
+
+# Core organizational entities are disjoint from external resources
+[] a owl:AllDisjointClasses ;
+   owl:members ( org:OrganizationalUnit org:ExternalServiceScope org:ServiceProvider org:GovernancePolicy ) .

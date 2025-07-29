@@ -1,0 +1,27 @@
+PREFIX org: <http://example.com/organization#>
+PREFIX inst: <http://example.com/instances#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Query 1: Find organizational unit for a specific external service scope
+# Example: What organizational unit owns AWS account "123456789012"?
+
+SELECT ?orgUnit ?orgUnitType ?orgLabel ?budgetCode ?costCenter ?accessLevel
+WHERE {
+    # Find the external service scope with specific identifier
+    ?scope org:scopeIdentifier "123456789012" ;
+           org:isAssignedTo ?orgUnit .
+    
+    # Get organizational unit details
+    ?orgUnit a ?orgUnitType ;
+             rdfs:label ?orgLabel .
+    
+    # Get optional financial and governance information
+    OPTIONAL { ?orgUnit org:budgetCode ?budgetCode }
+    OPTIONAL { ?orgUnit org:costCenter ?costCenter }
+    OPTIONAL { ?orgUnit org:accessLevel ?accessLevel }
+    
+    # Filter to only show organizational unit types (not service providers)
+    FILTER(?orgUnitType IN (org:Organization, org:Portfolio, org:Program, 
+                           org:Project, org:Product, org:Department, 
+                           org:Team, org:Operations))
+}

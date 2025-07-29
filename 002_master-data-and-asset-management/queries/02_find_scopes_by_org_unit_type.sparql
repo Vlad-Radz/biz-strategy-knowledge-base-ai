@@ -1,0 +1,28 @@
+PREFIX org: <http://example.com/organization#>
+PREFIX inst: <http://example.com/instances#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Query 2: Find all external service scopes owned by a specific organizational unit type
+# Example: Find all AWS accounts owned by Projects
+
+SELECT ?project ?projectLabel ?scope ?scopeLabel ?scopeIdentifier ?scopeType ?scopeUrl
+WHERE {
+    # Find all projects
+    ?project a org:Project ;
+             rdfs:label ?projectLabel .
+    
+    # Find scopes assigned to these projects
+    ?scope org:isAssignedTo ?project ;
+           rdfs:label ?scopeLabel ;
+           org:scopeIdentifier ?scopeIdentifier ;
+           org:scopeType ?scopeType .
+    
+    # Get scope URL if available
+    OPTIONAL { ?scope org:scopeUrl ?scopeUrl }
+    
+    # Filter for specific service types (uncomment as needed)
+    FILTER(CONTAINS(?scopeType, "AWS"))
+    # FILTER(CONTAINS(?scopeType, "GitHub"))
+    # FILTER(CONTAINS(?scopeType, "Jira"))
+}
+ORDER BY ?projectLabel ?scopeType

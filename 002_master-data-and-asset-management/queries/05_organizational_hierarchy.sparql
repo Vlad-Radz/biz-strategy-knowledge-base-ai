@@ -1,0 +1,30 @@
+PREFIX org: <http://example.com/organization#>
+PREFIX inst: <http://example.com/instances#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Query 5: Organizational hierarchy with external service mapping
+# Show the reporting structure and what external services each unit manages
+
+SELECT ?parentUnit ?parentLabel ?childUnit ?childLabel ?childType 
+       ?externalScope ?scopeType ?scopeIdentifier
+WHERE {
+    # Find organizational units with reporting relationships
+    ?childUnit org:reportsTo ?parentUnit .
+    
+    ?parentUnit rdfs:label ?parentLabel .
+    ?childUnit a ?childType ;
+               rdfs:label ?childLabel .
+    
+    # Find external scopes assigned to the child unit
+    OPTIONAL {
+        ?externalScope org:isAssignedTo ?childUnit ;
+                      org:scopeType ?scopeType ;
+                      org:scopeIdentifier ?scopeIdentifier .
+    }
+    
+    # Filter to only show organizational unit types
+    FILTER(?childType IN (org:Organization, org:Portfolio, org:Program, 
+                         org:Project, org:Product, org:Department, 
+                         org:Team, org:Operations))
+}
+ORDER BY ?parentLabel ?childLabel
