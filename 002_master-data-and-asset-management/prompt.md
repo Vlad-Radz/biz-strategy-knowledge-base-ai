@@ -1,4 +1,4 @@
-# How ontologies can help creating semantic master data and managing  assets?
+# Prompt for an AI assitant
 
 I want to showcase how ontologies can help with:
 1. data interoperability: when diff. departments speak common language and can "translate" from own language to the language of other departments. --> this requires e.g. a layer of semantic master data.

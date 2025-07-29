@@ -1,5 +1,7 @@
 # AWS Resource Tagging Strategy Using Organizational Ontology
 
+⚠️ **Note: the information and queries used here were not checked against a real-life scenario and are here merely for demonstration purposed**
+
 ## Overview
 
 This document describes how to implement a semantic tagging strategy for AWS resources based on the organizational ontology. This approach enables automated cost allocation, governance policy enforcement, and resource ownership tracking.
@@ -54,7 +56,7 @@ Additional tags for enriched metadata:
 
 ## Tag Policy Implementation
 
-Create AWS Tag Policies that enforce ontology-based tagging:
+Create AWS SCP Policies that enforce ontology-based tagging (_if a user attempts to create EC2, RDS, or S3 resources without a OrganizationId tag matching the listed prefixes, the request is denied_):
 
 ```json
 {
@@ -70,13 +72,10 @@ Create AWS Tag Policies that enforce ontology-based tagging:
       ],
       "Resource": "*",
       "Condition": {
-        "Null": {
-          "aws:RequestedRegion": "false"
-        },
-        "ForAnyValue:StringNotEquals": {
+        "ForAnyValue:StringNotLike": {
           "aws:RequestTag/OrganizationId": [
             "PROJ-*",
-            "PROD-*", 
+            "PROD-*",
             "DEPT-*",
             "TEAM-*",
             "OPS-*"
@@ -88,31 +87,6 @@ Create AWS Tag Policies that enforce ontology-based tagging:
 }
 ```
 
-```sql
--- Cost by organizational unit type
-SELECT 
-    line_item_resource_id,
-    resource_tags_user_unit_type as unit_type,
-    resource_tags_user_unit_name as unit_name,
-    resource_tags_user_cost_center as cost_center,
-    SUM(line_item_unblended_cost) as total_cost
-FROM cost_and_usage_report
-WHERE month = '2025-01'
-    AND resource_tags_user_unit_type IS NOT NULL
-GROUP BY 1,2,3,4
-ORDER BY total_cost DESC;
-
--- Cost by access level classification
-SELECT 
-    resource_tags_user_access_level as access_level,
-    COUNT(DISTINCT line_item_resource_id) as resource_count,
-    SUM(line_item_unblended_cost) as total_cost
-FROM cost_and_usage_report
-WHERE month = '2025-01'
-    AND resource_tags_user_access_level IS NOT NULL
-GROUP BY 1
-ORDER BY total_cost DESC;
-```
 
 ## Governance and Compliance
 
@@ -137,3 +111,8 @@ Create Config rules to ensure compliance with ontology-based tagging:
   }
 }
 ```
+
+This JSON config would be used in AWS Config, which:
+- Continuously monitors AWS resources.
+- Evaluates them against rules (like required tags).
+- Flags noncompliant resources — but doesn’t stop them from being created.

@@ -1,5 +1,7 @@
 # CloudQuery Configuration for Organizational Unit Resource Filtering
 
+⚠️ **Note: the information and queries used here were not checked against a real-life scenario and are here merely for demonstration purposed**
+
 ## Overview
 
 CloudQuery configurations to extract and filter AWS resources based on organizational ontology classifications. This enables resource discovery, cost analysis, and compliance reporting aligned with organizational structures.
