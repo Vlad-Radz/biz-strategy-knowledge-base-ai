@@ -146,3 +146,7 @@ They called their domain modeling language, based on RDF, "upper". And here are 
 - They define a mapping from ontology of concepts to specific data containers.
 
 Thanks to that, their Unified Data Architecture platform can automatically create schemas for their RDF data, and sometimes, also populate specific data containers.
+
+**Discovery**
+
+UDA allows for querying the knowledge graph and searching for the concepts and data that instantiates them.
