@@ -1,6 +1,6 @@
 # CloudQuery Configuration for Organizational Unit Resource Filtering
 
-⚠️ **Note: the information and queries used here were not checked against a real-life scenario and are here merely for demonstration purposed**
+⚠️ **Note: the information and queries used here were not checked against a real-life scenario and are here merely for demonstration purposed**. They might contain bugs.
 
 ## Overview
 

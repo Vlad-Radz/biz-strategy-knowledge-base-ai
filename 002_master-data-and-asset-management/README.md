@@ -1,6 +1,6 @@
 # How ontologies can help creating semantic master data and managing assets?
 
-This is the showcase for how ontologies can help with:
+🕸 This is the showcase for how ontologies can help with:
 1. **data interoperability**. Interoperable data is one that can be understood ans used by different parties.This requires some sort of a controlled vocublary, or semantic master data.
 2. **asset management**. Given that you have a controlled vocabulary, you can use it annotate data or tag assets - servers, databases and cloud resources - in a unified way.
 
