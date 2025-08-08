@@ -74,7 +74,7 @@ def getPropertiesForClass(g, cat):
       props.append(PropertyType(name=propName, type="STRING", description=propDesc))
   return props
 
-def getSchemaFromOnto(g):
+def getSchemaFromOnto(g, classes_to_exclude=None):
   schema_builder = SchemaBuilder()
   classes = {}
   entities =[]
@@ -83,6 +83,8 @@ def getSchemaFromOnto(g):
   
   # get all subjects, for which predicate is rdf:type and objects are the specified classes
   for cat in g.subjects(RDF.type, OWL.Class):  
+    if getLocalPart(cat) in classes_to_exclude:
+        continue
     classes[cat] = None
     label = getLocalPart(cat)  # only get the actual class name
     props = getPropertiesForClass(g, cat)  # get OWL.DatatypeProperty properties for this class, returned as PropertyType data type
@@ -91,8 +93,10 @@ def getSchemaFromOnto(g):
                  properties=props))  # includes properties for this class
 
   # do the same for RDFS.domain classes (just in case we missed some before)
-  for cat in g.objects(None,RDFS.domain):
+  for cat in g.objects(None, RDFS.domain):
      if not cat in classes.keys():
+        if getLocalPart(cat) in classes_to_exclude:
+            continue
         classes[cat] = None
         label = getLocalPart(cat)
         props = getPropertiesForClass(g, cat)
@@ -101,8 +105,10 @@ def getSchemaFromOnto(g):
                     properties=props))
   
   # do the same for RDFS.range classes (just in case we missed some before)
-  for cat in g.objects(None,RDFS.range):
+  for cat in g.objects(None, RDFS.range):
      if not (cat.startswith("http://www.w3.org/2001/XMLSchema#") or cat in classes.keys()):
+        if getLocalPart(cat) in classes_to_exclude:
+            continue
         classes[cat] = None
         label = getLocalPart(cat)
         props = getPropertiesForClass(g, cat)

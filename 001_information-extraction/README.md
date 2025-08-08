@@ -25,8 +25,7 @@ I aggregated risks on the family level, as I wanted to keep the knowledge base c
 
 ## Ideas for improving the ontology:
 
-- Add :RiskTreatmentMethod, with possible categories: EliminateRisk, AvoidRisk, TransferRisk, ReduceRisk, RiskControl, ShareRisk, HaltSource, RemoveSource, RemoveImpact, RemoveConsequence, MonitorConsequence, MonitorImpact, MonitorRiskSource, etc.
-- Distinguish between risk response and treatment / preparation strategy? Can be both at the same time.
+- Add :RiskTreatmentMethod. Distinguish between risk response and treatment / preparation strategy? Can be both at the same time.
 - RiskEventCauses
 
 
@@ -45,18 +44,30 @@ AI risk ontology: https://delaramglp.github.io/airo/ and another one: https://ww
 
 Great taxonomy: https://www.openriskmanual.org/wiki/NACE_2.1_Classification
 
+One more taxonomy of AI risks: https://www.linkedin.com/posts/pradeeps_ai-risk-mitigation-activity-7356172503834095616-CTqc
+
 
 -----------------------------------------------
 
 # Data extraction process
 
 3 options for architecture:
-1.  use Jesus' github session29 to load ontology + write SHACL to control (if neosemantics works; you can see what violated the shapes) + session 30 to load pdf
-2. if needed: agentic checks + serialize not in Cypher, but in RDF, or even better: JSON + pydantic validator (and LLM that supports output in certain format)
-3. session 31: GraphRAG with schema (derived from ontology), entity resolution and Q&A (cypher construction based on onto)
+1. load ontology + write SHACL to control (in neosemantics, you can see what violated the shapes)
+2. serialize not in Cypher, but in RDF, or even better: JSON + pydantic validator (and LLM that supports output in certain format)
+3. GraphRAG with schema (derived from ontology), entity resolution and Q&A (cypher construction based on onto)
+--> I picked the third option.
 
-- Будет экстрагировать только те классы, что надо
+3 options for processing of large documents:
+1. Process pdf in chunks of 5 / 10 pages with GraphRAG. Problems: 1) disambuigation / deduplication? 2) The numeration of chunks in the graph - is there a way to keep the sequential numeration, or will it try to start with 1 every time?
+2. Load lexical graph -> do RAG / similarity search based on specific ontology -> choose chunks that are relevant for the domain graph -> build the domain graph based on those chunks. That would be better for building a true metadata knowledge graph, and to allow enrichment of the KG with different views (expressed as ontologies), but I didn't need it for my personal, simple use case.
+3. Do similarity search locally -> pick only relevant pieces of the document -> construct KG.
+--> I picked the third option.
+
+How to improve:
+- Pre-processing: agentic checks
 - Post-processing: N10s has a Cypher endpoint, which can convert results of Cypher query to RDF -> if you want to prepare data for semantic web tools
+- Post-processing: SHACL
+
 
 
 -----------------------------------------------

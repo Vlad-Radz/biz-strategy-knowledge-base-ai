@@ -1,16 +1,13 @@
-@prefix : <https://www.openriskmanual.org/ns/bmro#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
-@prefix sw: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
 @prefix dpv-owl: <https://w3id.org/dpv/owl#> .
 @prefix risk-owl: <https://w3id.org/dpv/risk/owl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix dct: <http://purl.org/dc/terms/> .
-@prefix dcam: <http://purl.org/dc/dcam/> .
 @prefix dolce: <https://www.loa.istc.cnr.it/dolce/dolce-owl/DOLCE#> .
 @prefix bizrisk: <http://example.com/bizrisk#> .
 @base <http://example.com/bizrisk#> .
@@ -20,9 +17,9 @@
     <http://purl.org/dc/elements/1.1/description> """
         Current ontology - BIZRISK - is described using W3C RDF Schema and the Web Ontology Language OWL.
         BIZRISK is built around the Cambridge Taxonomy of Business Risks: https://www.jbs.cam.ac.uk/wp-content/uploads/2021/11/crs-cambridge-taxonomy-of-business-risks.pdf
-        It adds foundatonal classes and data properties to the taxonomy, using classes and properties from:
+        It adds foundational classes and data properties to the taxonomy, using classes and properties from:
         - DOLCE as foundational ontology
-        - The Business Model Risk ontology (BMRO), which is built on the Business Model Canvas
+        - DPV (Data Privacy Vocabulary) for risk management concepts
 
         This ontology is aiming to represent the following views:
         1. What risk events occurred to a company in the past, with what consequences, and how were they mitigated?
@@ -69,10 +66,10 @@
 #    Classes
 #################################################################
 
-# Foundational classes:
-# - Risk is based on DOLCE
-# - Risk event response and treatment - are like Occurents (processes)
-
+schema:Organization a rdfs:Class ;
+    rdfs:label "Organization" ;
+    rdfs:comment "An organization such as a school, NGO, corporation, club, etc." ;
+    rdfs:subClassOf schema:Thing .
 
 # For the sake of semantics accuracy and namespace separation, I leave the original prefixes
 dpv-owl:RiskLevel a rdfs:Class,
@@ -99,7 +96,7 @@ bizrisk:RiskEvent a rdfs:Class,
         owl:onProperty bizrisk:Temporality ;
         owl:someValuesFrom xsd:boolean
     ] ;
-    skos:definition "An event that represents the materialization or occurrence of a risk"@en ;
+    skos:definition "An event that represents the materialization or occurrence of a risk. As such, a RiskEvent describes a situation which puts or can put an organization into jeopardy."@en ;
     skos:prefLabel "Risk Event"@en ;
     skos:scopeNote "A Risk Event is the actual occurrence or manifestation of a risk, representing the transition from potential risk to actual incident with consequences"@en .
 
@@ -175,9 +172,17 @@ dpv-owl:hasSeverity a rdf:Property,
     rdfs:domain bizrisk:RiskEvent ;
     rdfs:range dpv-owl:Severity ;
     rdfs:isDefinedBy dpv-owl: ;
-    sw:term_status "accepted"@en ;
     skos:definition "Indicates the severity associated with a concept"@en ;
     skos:prefLabel "has severity"@en .
+
+dpv-owl:occursFor a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain dpv-owl:RiskEvent ;
+    rdfs:range schema:Organization ;
+    rdfs:isDefinedBy dpv-owl: ;
+    skos:definition "Indicates the associated organization for a risk event"@en ;
+    skos:prefLabel "occurs for"@en ;
+    rdfs:comment "Risk events may occur for specific organizations"@en .
 
 
 # Properties serving as foundation for the future taxonomies of Measures and Consequences
@@ -217,6 +222,11 @@ bizrisk:hasImpactOnOperations a rdf:Property,
 
 # Data properties for free text descriptions
 # These properties allow RiskEvent to capture all relevant textual information directly
+bizrisk:description a owl:DatatypeProperty ;
+    rdfs:domain dpv-owl:Risk ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy bizrisk: ;
+    skos:prefLabel "description of the risk"@en .
 
 bizrisk:hasRiskEventDescription a owl:DatatypeProperty ;
     rdfs:domain bizrisk:RiskEvent ;
