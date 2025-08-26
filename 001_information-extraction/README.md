@@ -104,6 +104,7 @@ How to improve:
 - Post-processing: SHACL
 - Flow: make a proper pipeline. E.g. with [bauplan](https://docs.bauplanlabs.com/en/latest/concepts/pipelines.html) (features: versioned pipelines runs, DAG construction, reading data from file storage, functions runnable on serverless platforms, tests for data pipelines)
 - Multithreaded similarity analysis
+- semantic entity deduplication: [link](https://blog.graphlet.ai/the-rise-of-semantic-entity-resolution-45c48d5eb00a)
 
 Advices on how to design the process:
 - use many small, focused ontologies to keep models concentrated on your task
