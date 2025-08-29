@@ -35,3 +35,4 @@ _An exemplar graph illustrating some of the duties of a people leadership role i
 | `004_diagrams-to-process-models/` | Construct digital twins for business processes using diagrams as foundation | PlantUML, Neo4j | 🚧 in progress |
 | `005_mindful-machines/` | Provide context for telemetry data | ... | 🚧 in progress |
 | `006_synthetic-world/` | Generate accurate synthetic data based on ontology | ... | 🚧 in progress |
+| `007_industry-solutions/` | Solutions and ideas for specific industries | ... | 🚧 in progress |
