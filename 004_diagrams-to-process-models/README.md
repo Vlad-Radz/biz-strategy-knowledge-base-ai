@@ -17,17 +17,22 @@ I want to make coding assistants smarter by feeding the process models them. My 
 
 # Theory
 
-## Modeling processes
+## Modeling frameworks
+
+- 𝗕𝘂𝘀𝗶𝗻𝗲𝘀𝘀 𝗠𝗼𝗱𝗲𝗹𝗹𝗶𝗻𝗴 → roles, goals, outcomes
+- 𝗣𝗿𝗼𝗰𝗲𝘀𝘀 𝗠𝗼𝗱𝗲𝗹𝗹𝗶𝗻𝗴 (𝗕𝗣𝗠) → steps, flows, handoffs
+- 𝗕𝗣𝗠𝗡 → standardised visual grammar. Alternative for BPMN: CMMN, for less structured workflows, more event-driven
+- 𝗗𝗼𝗺𝗮𝗶𝗻-𝗗𝗿𝗶𝘃𝗲𝗻 𝗗𝗲𝘀𝗶𝗴𝗻 (𝗗𝗗𝗗) → bounded contexts, ubiquitous language
+- 𝗘𝗻𝘁𝗲𝗿𝗽𝗿𝗶𝘀𝗲 𝗗𝗮𝘁𝗮 𝗠𝗼𝗱𝗲𝗹𝗹𝗶𝗻𝗴 → interoperability and shared definitions
+- 𝗖𝗼𝗻𝗰𝗲𝗽𝘁𝘂𝗮𝗹 / 𝗟𝗼𝗴𝗶𝗰𝗮𝗹 𝗔𝗿𝗰𝗵𝗶𝘁𝗲𝗰𝘁𝘂𝗿𝗲 → bridge from business vision to tech design
+
+## How to model processes with ontologies
 
 Best practices is to have 2 ontologies:
 1. one for operational continuity
 2. another one - for workflows (more dynamic one).
 --> Use foundational ontology like BFO for both, extend it by required classes; alternatively use other mature ontologies like Prov-O for foundation; alternatively use the Gist ontology (gistBFO is aligned with BFO).
 --> use the BPMN notation to describe processes for humans. No easy way to transform to RDF. But it can be exposed, searched and queried in specialized tools like Camunda.
-
-Alternatives:
-- convert UML (in XML) to OWL
-- Alternative for BPMN: CMMN, for less structured workflows, more event-driven
 
 Another useful classification for building blocks of processes was presented in a [paper](https://drops.dagstuhl.de/entities/document/10.4230/TGDK.2.1.1) about CDRTO concepts:
 - Control
