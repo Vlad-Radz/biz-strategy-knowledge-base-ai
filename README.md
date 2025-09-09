@@ -33,6 +33,6 @@ _An exemplar graph illustrating some of the duties of a people leadership role i
 | `002_master-data-and-asset-management/` | Define business concepts once - use them everywhere | Ontologies (Turtle, OWL), Python, AWS | ✅ implemented as text guide |
 | `003_security-and-audit/` | Use ontology as single souce of truth for IT security framework | Ontologies (Turtle, OWL), Python, Pydantic | ✅ implemented as text guide |
 | `004_diagrams-to-process-models/` | Construct digital twins for business processes using diagrams as foundation | PlantUML, Neo4j | 🚧 in progress |
-| `005_mindful-machines/` | Provide context for telemetry data | ... | 🚧 in progress |
+| `005_mindful-machines/` | Industrial use cases: classification of machines, providing context for telemetry data etc. | ... | 🚧 in progress |
 | `006_synthetic-world/` | Generate accurate synthetic data based on ontology | ... | 🚧 in progress |
 | `007_industry-solutions/` | Solutions and ideas for specific industries | ... | 🚧 in progress |
