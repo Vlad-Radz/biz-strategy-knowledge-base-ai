@@ -1,7 +1,10 @@
 
+# Use case
+
+
 ## Datasets and notebooks
 
-_(looking for "industrial", "manufacturing")_
+_(looking for "industrial", "manufacturing" on Kaggle)_
 
 
 Equipment Monitoring, ANN:
@@ -21,3 +24,4 @@ ML-Powered Maintenance: Smart & Proactive
 
 Further datasets to explore
 - casting product image data for quality inspection. [link](https://www.kaggle.com/datasets/ravirajsinh45/real-life-industrial-dataset-of-casting-product). Related notebook: [link](https://www.kaggle.com/code/koheimuramatsu/model-explainability-in-industrial-image-detection)
+- Autonomous Supply Chain Optimizer with RL: [link](https://www.kaggle.com/code/evilspirit05/autonomous-supply-chain-optimizer-with-rl/input)
