@@ -16,20 +16,20 @@ Many database providers supply GraphQL libraries that convert GraphQL operations
 
 ### Bridging Data Lakes and Real-Time Applications with GraphQL
 
-A frequent challenge arises when making large data products available to thinner clients in real time. While columnar formats such as Parquet or ORC, along with in-memory formats like Apache Arrow, are highly efficient for analytics, they are not straightforward to expose through low-latency APIs. Tools like DataFusion help query Arrow data in memory, but serving this through GraphQL requires an additional layer.
+A frequent challenge arises when making large data products available to thinner clients in real time --> Use columnar formats such as Parquet or ORC, along with in-memory formats like `Apache Arrow` (in combination with in-process engines, such as `DuckDB` and `DataFusion` which helps query Arrow data in memory) + GraphQL API serving layer on top.
 
 The typical implementation involves exposing a GraphQL endpoint over data lake tables, generating a schema, and implementing resolvers that query pre-aggregated or optimized subsets of data. This allows internal microservices or applications to retrieve real-time statistics from Spark-generated datasets without direct access to raw files.
 
 ### AWS as an Example Implementation
 
-On AWS, AppSync provides a managed GraphQL service that can unify access to multiple backends, including databases, microservices, and data lakes. Combined with Lake Formation and Glue Data Catalog, administrators can enforce fine-grained governance and control access at the table, column, or even cell level. Queries can be executed via Athena, triggered by Lambda functions orchestrated through AppSync, ensuring secure and performant access to S3-based data lakes.
+On AWS, `AppSync` provides a managed GraphQL service that can unify access to multiple backends, including databases, microservices, and data lakes. Combined with `Lake Formation` and `Glue Data Catalog`, administrators can enforce fine-grained governance and control access at the table, column, or even cell level. Queries can be executed via `Athena`, triggered by Lambda functions orchestrated through `AppSync`, ensuring secure and performant access to S3-based data lakes.
 
-This architecture supports multi-tenancy search, cataloging, and federation of data assets across organizational boundaries. Integration with AWS DataZone and Master Data Management services enables automated discovery, schema evolution, and governance enforcement, making it easier to define relationships for data mesh–based search and catalogs.
+This architecture supports multi-tenancy search, cataloging, and federation of data assets across organizational boundaries. Integration with `AWS DataZone` and Master Data Management services enables automated discovery, schema evolution, and governance enforcement, making it easier to define relationships for data mesh–based search and catalogs.
 
 
 ## Step 2: Moving Beyond Access: Studying Relationships in a Graph Database
 
-If the goal is not just to access but to study and analyze relationships between data assets, a graph database becomes essential. Graph databases store connections natively, allowing for richer relationship modeling than traditional relational or document-based systems. These relationships can be explored using a proprietary query language like Cypher or expressed through GraphQL queries for broader developer adoption.
+If the goal is not just to access but to study and analyze relationships between data assets, a graph database becomes essential. Graph databases store connections natively, allowing for richer relationship modeling than traditional relational or document-based systems. These relationships can be explored using a proprietary query language like `Cypher` or expressed through GraphQL queries for broader developer adoption.
 
 To power this, metadata must first be loaded into the graph. By representing metadata as graph nodes and edges—what we can call metadata types—we can create a [Meta Grid](https://olesenbagneux.medium.com/the-meta-grid-is-the-third-wave-of-data-decentralization-b18827711cec): a unifying knowledge graph that connects diverse metadata repositories.
 

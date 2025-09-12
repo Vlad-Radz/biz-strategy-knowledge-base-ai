@@ -1,13 +1,6 @@
 
 # Use cases
 
-## Give context to telemtry
-
-Simulate data: https://github.com/syedhassaanahmed/iot-simulator-influxdb
-
-The case for IoT + Schema.org: https://schema.org/docs/iot-gettingstarted.html
-
-
 ## Bring symbolic AI to machine learning / deep learning
 
 The following notebook describes a pretty typical case for training a ML / DL model for predictive maintenance: `005_mindful-machines\industrial-equipment-monitoring-with-ml-onto.ipynb`
@@ -40,3 +33,13 @@ Further datasets to explore
 - Autonomous Supply Chain Optimizer with RL: [link](https://www.kaggle.com/code/evilspirit05/autonomous-supply-chain-optimizer-with-rl/input)
 
 
+## 🚧 (under construction) Give context to telemetry
+
+Simulate data: https://github.com/syedhassaanahmed/iot-simulator-influxdb
+
+The case for IoT + Schema.org: [link](https://schema.org/docs/iot-gettingstarted.html)
+- Further info about microdata: [link](https://www.linkedin.com/posts/volpini_%F0%9D%97%AC%F0%9D%97%BC%F0%9D%98%82%F0%9D%97%BF-%F0%9D%98%84%F0%9D%97%B2%F0%9D%97%AF%F0%9D%98%80%F0%9D%97%B6%F0%9D%98%81%F0%9D%97%B2-%F0%9D%97%B6%F0%9D%98%80-%F0%9D%97%AE%F0%9D%97%AF%F0%9D%97%BC%F0%9D%98%82%F0%9D%98%81-%F0%9D%98%81%F0%9D%97%BC-activity-7361321548714078208-QsFG)
+
+OpenTelemetry? Something like Game of traces ([link](https://grafana.com/blog/2025/08/11/learn-opentelemetry-tracing-through-a-grand-strategy-game-introducing-game-of-traces/))?
+
+Study standards for industrial assets: [link](https://www.linkedin.com/posts/aleksandra-kn%C3%B6dlseder-859b222b_iso14224-cfihos-reliability-activity-7367862980513869825-gMQ8)

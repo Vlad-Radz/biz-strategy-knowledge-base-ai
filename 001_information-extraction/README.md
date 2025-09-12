@@ -271,6 +271,7 @@ Some ideas for the future
     - https://github.com/AuvaLab/itext2kg
     - https://github.com/LMMApplication/RAKG
     - LangExtract (Python); together with DSPy might do semantic entity recognition and extraction: [link](https://colab.research.google.com/drive/10-Ok8gHpdQbQKwbe6b_AI-NsWyOBcz12?usp=sharing)
+- apply NLP techniques to do: entity linking, relation linking, disambiguation, coreference resolution
 - apply reasoners for deriving new data based on the following: subclass relationships, domain/range constraints, `owl:sameAs`, `owl:inverseOf`, disjoint classes, transitive properties, SWRL rules. Description logic inference: owl:intersectionOf, owl:unionOf, owl:someValuesFrom ——> use Apache Jena to infer new data before loading to Neo4j.  
     - If you want to work with RDF triple and not Neo4j, then you don't necessarily need inference. Instead, you could put a lot of the (business) logic into the query rather than into the data model. SPARQL makes it possible to establish a context of operation in ways that inferencing does not. + use SHACL for validation.
 - submit a data model for risk management to Neo4j [docs site](https://neo4j.com/developer/industry-use-cases/data-models/transactions/transactions-base-model/)?
