@@ -12,7 +12,6 @@ Throughout the notebook, I am describing ideas of how ontologies could enhance M
 
 _(looking for "industrial", "manufacturing" on Kaggle)_
 
-
 Equipment Monitoring, ANN:
 - https://www.kaggle.com/code/dnkumars/equipment-monitoring-ann
 - Dimensions: temperature, pressure, vibration, humidity, equipment, location, faulty (binary). Examples for equipment: Turbine, Compressor, Pump etc.

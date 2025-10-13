@@ -98,14 +98,6 @@ Multiple ontologies and taxonomies for AI risks are described here: `003_securit
 3. Do similarity search locally -> pick only relevant pieces of the document -> construct KG.
 --> I picked the third option.
 
-How to improve:
-- Pre-processing: agentic checks
-- Post-processing: N10s has a Cypher endpoint, which can convert results of Cypher query to RDF -> if you want to prepare data for semantic web tools
-- Post-processing: SHACL
-- Flow: make a proper pipeline. E.g. with [bauplan](https://docs.bauplanlabs.com/en/latest/concepts/pipelines.html) (features: versioned pipelines runs, DAG construction, reading data from file storage, functions runnable on serverless platforms, tests for data pipelines)
-- Multithreaded similarity analysis
-- semantic entity deduplication: [link](https://blog.graphlet.ai/the-rise-of-semantic-entity-resolution-45c48d5eb00a)
-
 Advices on how to design the process:
 - use many small, focused ontologies to keep models concentrated on your task
 - when extracting data from text: work with chunks of small size, with little overlaps
@@ -266,7 +258,20 @@ ORDER BY communityId, nodeLabels
 
 # Future development
 
-Some ideas for the future
+How to improve the solution:
+- Pre-processing: agentic checks
+- Post-processing: N10s has a Cypher endpoint, which can convert results of Cypher query to RDF -> if you want to prepare data for semantic web tools
+- Post-processing: SHACL
+- Flow: make a proper pipeline. E.g. with [bauplan](https://docs.bauplanlabs.com/en/latest/concepts/pipelines.html) (features: versioned pipelines runs, DAG construction, reading data from file storage, functions runnable on serverless platforms, tests for data pipelines)
+- Multithreaded similarity analysis
+- Deduplication / entity resolution
+  - semantic entity deduplication: [link](https://blog.graphlet.ai/the-rise-of-semantic-entity-resolution-45c48d5eb00a).
+  - Another approach to deduplication: if the names of 2 nodes have a strong string similarity (say over 95%) and they have identical clustering coefficients.
+  - identify "blocking keys": avoid comparing pairs that are not likely to produce matches
+  - introduce rules based on exact matches (useful for strong identifiers), will approximate matches based on a definition of distance (numeric, dates, embeddings), and may also introduce elements of fuzziness (string similarity, value approximation, etc.) --> introduce relationships between related identities --> run an algorithm like Weakly Connected Components to identify groups of nodes.
+  - Once the set of related entities has been determined and the relationships made explicit in the graph, the final step is to create a persisted representation of what’s typically called master entities
+
+Some additional ideas for the future
 - check alternatives to GraphRAG --> think of solution for generating libraries of knowledge. E.g. strategy patterns. Formulate inductive patterns for ontology construction and maintenance.
     - https://github.com/AuvaLab/itext2kg
     - https://github.com/LMMApplication/RAKG
