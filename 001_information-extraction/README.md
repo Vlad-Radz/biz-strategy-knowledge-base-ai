@@ -270,6 +270,7 @@ How to improve the solution:
   - identify "blocking keys": avoid comparing pairs that are not likely to produce matches
   - introduce rules based on exact matches (useful for strong identifiers), will approximate matches based on a definition of distance (numeric, dates, embeddings), and may also introduce elements of fuzziness (string similarity, value approximation, etc.) --> introduce relationships between related identities --> run an algorithm like Weakly Connected Components to identify groups of nodes.
   - Once the set of related entities has been determined and the relationships made explicit in the graph, the final step is to create a persisted representation of what’s typically called master entities
+- measure the quality in different scenarios. There are [indications](https://www.linkedin.com/posts/year-of-the-graph_rag-graphrag-benchmark-activity-7385918160924987393-7RqC) that GraphRAG is not always better than traditional RAG.
 
 Some additional ideas for the future
 - check alternatives to GraphRAG --> think of solution for generating libraries of knowledge. E.g. strategy patterns. Formulate inductive patterns for ontology construction and maintenance.
