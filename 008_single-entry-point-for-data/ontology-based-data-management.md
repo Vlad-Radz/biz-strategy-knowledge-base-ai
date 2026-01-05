@@ -6,11 +6,11 @@ Organizations increasingly need a single, consistent entry point for accessing d
 
 ## Step 1: Build Relationships between scattered data
 
-Most organizations face the challenge of scattered data assets—databases, catalogs, systems, and services that exist in silos. GraphQL provides a natural entry point for building relationships across these assets. Its schema-driven approach allows teams to define entities and their attributes, then connect them through a flexible API layer. This makes it possible to unify how data is queried and exposed, even if it remains distributed in heterogeneous backends.
+Most organizations face the challenge of scattered data assets: databases, catalogs, systems, and services that exist in silos. GraphQL provides a natural entry point for building relationships across these assets. Its schema-driven approach allows teams to define entities and their attributes, then connect them through a flexible API layer. This makes it possible to unify how data is queried and exposed, even if it remains distributed in heterogeneous backends.
 
 ### GraphQL as a Unified API Layer
 
-GraphQL is not a database query language but an API query language that allows clients to specify exactly what data they need. It defines entities and their attributes (**types** and **fields**) as well as relationships between them, forming a data graph. Operations in GraphQL—queries, mutations, and subscriptions—are fulfilled by resolvers, which connect the API to underlying data stores.
+GraphQL is not a database query language but an API query language that allows clients to specify exactly what data they need. It defines entities and their attributes (**types** and **fields**) as well as relationships between them, forming a data graph. Operations in GraphQL - queries, mutations, and subscriptions - are fulfilled by resolvers, which connect the API to underlying data stores.
 
 Many database providers supply GraphQL libraries that convert GraphQL operations into queries against their native backends. However, when working with traditional relational stores, these libraries often require significant transformation and relationship mapping. This can result in duplicated data, awkward table structures, and technical debt. **Graph databases** alleviate much of this complexity because GraphQL type definitions naturally align with a graph-based data model, enforcing a strict type system while preserving relationships.
 
@@ -31,7 +31,7 @@ This architecture supports multi-tenancy search, cataloging, and federation of d
 
 If the goal is not just to access but to study and analyze relationships between data assets, a graph database becomes essential. Graph databases store connections natively, allowing for richer relationship modeling than traditional relational or document-based systems. These relationships can be explored using a proprietary query language like `Cypher` or expressed through GraphQL queries for broader developer adoption.
 
-To power this, metadata must first be loaded into the graph. By representing metadata as graph nodes and edges—what we can call metadata types—we can create a [Meta Grid](https://olesenbagneux.medium.com/the-meta-grid-is-the-third-wave-of-data-decentralization-b18827711cec): a unifying knowledge graph that connects diverse metadata repositories.
+To power this, metadata must first be loaded into the graph. By representing metadata as graph nodes and edges - what we can call metadata types - we can create a [Meta Grid](https://olesenbagneux.medium.com/the-meta-grid-is-the-third-wave-of-data-decentralization-b18827711cec): a unifying knowledge graph that connects diverse metadata repositories.
 
 The Four Types of Metadata
 
@@ -43,7 +43,7 @@ A metadata repository is most effective when it captures all four key types of m
 
 Together, these types provide not just a catalog of data assets but a knowledge structure that connects IT, data, information, and knowledge management domains.
 
-**Use Cases Enabled by Metadata knowledge graphs**. Building a metadata knowledge graph (as possible implementation of the ) unlocks a range of critical enterprise use cases:
+**Use Cases Enabled by Metadata knowledge graphs**. Building a metadata knowledge graph (as possible implementation of the metadata repository) unlocks a range of critical enterprise use cases:
 - Lineage: Tracing how data flows across systems, transformations, and processes.
 - Change management: Assessing the impact of schema changes, migrations, or policy updates across dependent assets.
 - Discovery and search: Enabling richer queries across scattered metadata repositories.

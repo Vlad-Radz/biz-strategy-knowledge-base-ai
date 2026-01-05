@@ -1,0 +1,135 @@
+@startuml
+
+!include <osa/id/card/card>
+!include <osa/firewall/firewall>
+!include <osa/hub/hub>
+
+title Authentication Flow
+
+actor Web_User
+participant "<$firewall{scale=0.3}> F5 Firewall" as F5
+participant "<$card{scale=0.3}> IDP" as IDP  
+participant "<$firewall{scale=0.3}> IDP Proxy" as Proxy
+participant "<$hub{scale=0.3}> ALM app" as ALM
+
+Web_User -> F5 : HTTP GET to ALM
+
+activate F5
+    note right of F5
+        <env>-alm.website.com GET 
+    end note
+
+    Web_User <- F5: Redirect to policy endpoint
+    note right of F5
+        302 Redirect to <env>-alm.website.com/my.policy
+    end note
+
+    Web_User -> F5: GET policy
+    note right of F5
+        <env>-alm.website.com GET /my.policy
+    end note
+
+    Web_User <- F5: Redirect to IDP
+    note right of F5
+        302 Redirect to idp.cloud.website.com/auth/realm/{realm}/openid-connect/auth
+        client_id: idp-123
+        redirect_url: https://<env>-alm.website.com/oauth/client/redirect
+        response_type: code
+        scope: openid profile email
+    end note
+
+deactivate F5
+
+
+Web_User -> IDP : GET auth endpoint
+
+activate IDP
+    note right of IDP
+        idp.cloud.website.com GET /auth/realms/{realm}/openid-connect/auth
+        (with parameters above)
+    end note
+
+    Web_User <- IDP : 200 OK (IDP Login page)
+    
+    Web_User -> IDP : Sending username and password
+    note right of IDP
+        idp.cloud.website.com POST /auth/realms/{realm}/login-actions/authenticate
+        session_code: ...
+        client_id: idp-123
+        FORM_DATA:
+            username: ...
+            password: ...
+    end note
+
+    Web_User <- IDP : 200 OK (IDP TOTP page)
+
+    Web_User -> IDP : Sending TOTP
+    note right of IDP
+        idp.cloud.website.com POST /auth/realms/{realm}/login-actions/authenticate
+        session_code: ...
+        client_id: idp-123
+        FORM_DATA:
+            otp: OTPCODE
+    end note
+
+    Web_User <- IDP: Redirect to ALM
+    note right of IDP
+        302 Redirect to <env>-alm.website.com/oauth/client/redirect
+        iss: ...
+        code: ...
+    end note
+
+deactivate IDP
+
+
+Web_User -> Proxy : HTTP GET to redirect endpoint
+
+activate Proxy
+
+    note right of Proxy
+        <env>-alm.website.com GET /oauth/client/redirect
+        (with parameters above)
+    end note
+
+    Web_User <- Proxy : 302 Redirect to <env>-alm.website.com/
+
+    Web_User -> Proxy : <env>-alm.website.com GET /
+
+    Web_User <- Proxy : Redirect to IDP
+
+    note right of Proxy
+        302 Redirect idp.cloud.website.com/auth/realms/{realm}/openid-connect/auth
+        client_id: ...
+        redirect_uri: https://<env>-alm.website.com/oauth2/callback
+        scope: openid email profile
+    end note
+    
+    Web_User -> IDP : GET auth endpoint
+    activate IDP
+        note right of IDP
+            idp.cloud.website.com GET /auth/realms/{realm}/openid-connect/auth
+            (with parameters above)
+        end note
+
+        Web_User <- IDP : Redirect
+        note right of IDP
+            302 Redirect to <env>-alm.website.com/oauth2/callback
+            iss: ...
+            code: ...
+        end note
+    deactivate IDP
+
+    Web_User -> Proxy : GET callback
+    note right of Proxy
+        <env>-alm.website.com GET /oauth2/callback
+        (with parameters above)
+    end note
+
+    Web_User <- Proxy : 302 Redirect to ALM
+
+deactivate Proxy
+
+Web_User -> ALM : <env>-alm.website.com GET /
+Web_User <- ALM : 200 OK
+
+@enduml
